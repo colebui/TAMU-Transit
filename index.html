@@ -7,21 +7,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="stylesheet.css">
-    <!--script src="map.js"></script>
+    <script src="map.js"></script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDutuTXuuUC-5ywb9P6j4OOs7u_sliwfwM&callback=initMap">
-    </script-->
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
     <div class="menu" id="menu">
         <nav>
-            <button class="button bus"><i class="fa fa-bus"></i></button>
-            <button class="button bike"><i class="fa fa-bicycle"></i></button>
-            <button class="button walk"><i class="fa fa-blind"></i></button>
-            <button class="button car"><i class="fa fa-car"></i></button>
-            <button class="button accessible"><i class="fa fa-wheelchair-alt"></i></button>
+            <button class="button bus" onclick="busButton()" ><i class="fa fa-bus"></i></button>
+            <button class="button bike" onclick="bikeButton()"><i class="fa fa-bicycle"></i></button>
+            <button class="button walk" onclick="walkButton()"><i class="fa fa-blind"></i></button>
+            <button class="button car" onclick="carButton()"><i class="fa fa-car"></i></button>
+            <button class="button wheelchair" onclick="wheelchairButton()"><i class="fa fa-wheelchair-alt"></i></button>
+            <input type="checkbox" id="veoride" style="visibility: hidden;">
+            <label for="veoride" style="visibility: hidden;" id="veorideText">veoride</label><br>
         </nav>
         <input type="text" id="currentLocation">
         <input type="text" id="destination">
