@@ -112,6 +112,10 @@ label{
     top: 3px;
 }
 
+.directions{
+    text-align: center;
+}
+
 .Directions{
     position: absolute;
     right: 17px;
