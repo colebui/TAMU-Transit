@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html land="en-us">
+
+<head>
+    <title>Simple UI</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="application.scss">
+    <script src="map.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDutuTXuuUC-5ywb9P6j4OOs7u_sliwfwM&callback=initMap">
+    </script>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="menu" id="menu">
+        <div class="options">
+            <nav>
+                <button class="button bus" id = "bus" onclick="busButton()"><i class="fa fa-bus"></i></button>
+                <button class="button bike" id = "bike" onclick="bikeButton()"><i class="fa fa-bicycle"></i></button>
+                <button class="button walk" id = "walk" onclick="walkButton()"><i class="fa fa-blind"></i></button>
+                <button class="button car" id = "car" onclick="carButton()"><i class="fa fa-car"></i></button>
+                <button class="button wheelchair" id = "wheelchair" onclick="wheelchairButton()"><i class="fa fa-wheelchair-alt"></i></button>
+                <div class="pretty p-icon p-round p-pulse" id = "VeoOption" style = "visibility: hidden">
+                    <input type="checkbox" />
+                    <div class="state p-primary">
+                        <i class="icon mdi mdi-check"></i>
+                        <label>Veoride</label>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <input class = "currentLocation" id="currentLocation" onclick="firstbox()">
+        <input class = "destination" id="destination" onclick="secondbox()">
+        <button style = "visibility: visible;" class="Directions" id = "search1" onclick="Directions()"><i class="material-icons" style = "font-size: 30px; color: rgb(122, 0, 0);; position: absolute; right: 5px; top: 5px;">directions</i></button>
+        <button style = "visibility: hidden;" class="Directions2" id = "search2" onclick="Directions()"><i class="material-icons" style = "font-size: 30px; color: rgb(122, 0, 0);; position: absolute; right: 5px; top: 5px;">directions</i></button>
+        <div class="directions" id = "output"> </div>
+    </div>
+
+    <button class="menubtn" id="menubtn" onclick="openMenu()">
+        <i class="fa fa-caret-right" style="font-size:24px"></i>
+    </button>
+
+    <div id="map"></div>
+
+    <script src="buttons.js"></script>
+</body>
+
+</html>
