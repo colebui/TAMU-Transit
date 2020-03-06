@@ -12,6 +12,7 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDutuTXuuUC-5ywb9P6j4OOs7u_sliwfwM&callback=initMap">
     </script>
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css">
+   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
@@ -23,25 +24,22 @@
                 <button class="button bike" onclick="bikeButton()"><i class="fa fa-bicycle"></i></button>
                 <button class="button walk" onclick="walkButton()"><i class="fa fa-blind"></i></button>
                 <button class="button car" onclick="carButton()"><i class="fa fa-car"></i></button>
-                <button class="button wheelchair" onclick="wheelchairButton()"><i
-                        class="fa fa-wheelchair-alt"></i></button>
-                
-                        <div class="pretty p-icon p-round p-pulse">
-                            <input type="checkbox" />
-                            <div class="state p-success">
-                                <i class="icon mdi mdi-check"></i>
-                                <label>Veoride</label>
-                            </div>
-                        </div>
-
+                <button class="button wheelchair" onclick="wheelchairButton()"><i class="fa fa-wheelchair-alt"></i></button>
+                <div class="pretty p-icon p-round p-pulse" id = "VeoOption" style = "visibility: hidden">
+                    <input type="checkbox" />
+                    <div class="state p-primary">
+                        <i class="icon mdi mdi-check"></i>
+                        <label>Veoride</label>
+                    </div>
+                </div>
             </nav>
         </div>
-        <input type="text" id="currentLocation">
-        <input type="text" id="destination">
-    
 
-
+        <input class = "currentLocation" id="currentLocation" onclick="firstbox()">
+        <input class = "destination" id="destination" onclick="secondbox()">
+        <button style = "visibility: visible;" class="Directions" id = "search1" onclick="Directions()"><i class="material-icons" style = "font-size: 30px; color: red; position: absolute; right: 5px; top: 5px;">directions</i></button>
         <div class="directions"> </div>
+        <button style = "visibility: hidden;" class="Directions2" id = "search2" onclick="Directions()"><i class="material-icons" style = "font-size: 30px; color: red; position: absolute; right: 5px; top: 5px;">directions</i></button>
     </div>
 
     <button class="menubtn" id="menubtn" onclick="openMenu()">
