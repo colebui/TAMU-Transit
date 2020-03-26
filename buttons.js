@@ -18,6 +18,7 @@ function openMenu(){
     menu.style.left = "0px";
     menuBtn.innerHTML = "<i class=\"fa fa-caret-left\" style=\"font-size:24px\"></i>";
     map.style.left = "408px";
+    map.style.right = "0px";
     map.style.width = w-408+"px";
     menuBtn.setAttribute("onClick","closeMenu()");
 }
@@ -27,12 +28,13 @@ function closeMenu(){
     menu.style.left = "-408px";
     menuBtn.innerHTML = "<i class=\"fa fa-caret-right\" style=\"font-size:24px\"></i>";
     map.style.left = "0px";
+    map.style.right = "0px";
     map.style.width = "100%";
     menuBtn.setAttribute("onClick","openMenu()");
 }
 
 function busButton(){//put all functions for bus button here
-    veorideCheckBox.style.visibility = "hidden";
+    veorideCheckBox.style.visibility = "visible";
     bus.style.color = "Black";
     bike.style.color = "#a7a7a7";
     walk.style.color = "#a7a7a7";
