@@ -1,0 +1,44 @@
+!!!
+%html{:land => "en-us"}
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Simple UI
+    %meta{:content => "initial-scale=1.0", :name => "viewport"}/
+    %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"}
+    %meta{:charset => "UTF-8"}/
+    %link{:href => "stylesheet.css", :rel => "stylesheet"}/
+    %script{:src => "map.js"}
+    %script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyDutuTXuuUC-5ywb9P6j4OOs7u_sliwfwM&callback=initMap"}
+      :cdata
+    %link{:href => "https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css", :rel => "stylesheet"}/
+    %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
+    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+  %body
+    #menu.menu
+      .options
+        %nav
+          %button#bus.button.bus{:onclick => "busButton()"}
+            %i.fa.fa-bus
+          %button#bike.button.bike{:onclick => "bikeButton()"}
+            %i.fa.fa-bicycle
+          %button#walk.button.walk{:onclick => "walkButton()"}
+            %i.fa.fa-blind
+          %button#car.button.car{:onclick => "carButton()"}
+            %i.fa.fa-car
+          %button#wheelchair.button.wheelchair{:onclick => "wheelchairButton()"}
+            %i.fa.fa-wheelchair-alt
+      %input#currentLocation.currentLocation{:onclick => "firstbox()"}/
+      %input#destination.destination{:onclick => "secondbox()"}/
+      %button#search1.Directions{:onclick => "Directions()", :style => "visibility: visible;"}
+        %i.material-icons{:style => "font-size: 30px; color: rgb(122, 0, 0);; position: absolute; right: 5px; top: 5px;"} directions
+      %button#search2.Directions2{:onclick => "Directions()", :style => "visibility: hidden;"}
+        %i.material-icons{:style => "font-size: 30px; color: rgb(122, 0, 0);; position: absolute; right: 5px; top: 5px;"} directions
+      #VeoOption.checkbox{:style => "visibility: hidden;"}
+        %input#VeoRide.larger{:name => "VeoRide", :type => "checkbox", :value => "Bike", :width => "100px"}/
+        %label{:for => "VeoRide"}
+          %img{:height => "30", :src => "VeoRide_Logo.png", :width => "auto"}/
+      #output.directions
+    %button#menubtn.menubtn{:onclick => "openMenu()"}
+      %i.fa.fa-caret-right{:style => "font-size:24px"}
+    #map
+    %script{:src => "buttons.js"}
