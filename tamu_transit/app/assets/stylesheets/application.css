@@ -17,7 +17,7 @@
     width: 408px;
     height: 100%;
     background-color: rgb(122, 0, 0);
-    left: -408px;
+    left: 0px;
     top: 0;
     transition: left 1s;
     z-index: 99;
@@ -37,8 +37,8 @@
     width: 23px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
     overflow: hidden;
-    top: 15px;
-    left: -1px;
+    top: 5px;
+    left: 385px;
     transition: left 1s;
 
     z-index: 99;
