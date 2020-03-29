@@ -1,27 +1,11 @@
 function initMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+    mapTypeControl: false,
+    center: {lat: 30.618811, lng: -96.336424},
+    zoom: 13
+  });
 
-    // The location of cstat
-    var cstat = {
-        lat: 30.618811,
-        lng: -96.336424
-    };
-    // The map, centered at cstat
-    var map = new google.maps.Map(
-        document.getElementById('map'), {
-            zoom: 16,
-            center: cstat,
-            mapTypeControl: true,
-            mapTypeControlOptions: {
-                position: google.maps.ControlPosition.TOP_CENTER
-            }
-
-        });
-    // The marker, positioned at cstat
-    var marker = new google.maps.Marker({
-        position: cstat,
-        map: map
-    });
-    new AutocompleteDirectionsHandler(map);
+  new AutocompleteDirectionsHandler(map);
 }
 function AutocompleteDirectionsHandler(map) {
   this.map = map;
@@ -32,9 +16,8 @@ function AutocompleteDirectionsHandler(map) {
   this.directionsRenderer = new google.maps.DirectionsRenderer;
   this.directionsRenderer.setMap(map);
 
-  var originInput = document.getElementById('search1');
-  var destinationInput = document.getElementById('search2');
-  var modeSelector = document.getElementById('mode-selector');
+  var originInput = document.getElementById('currentLocation');
+  var destinationInput = document.getElementById('destination');
 
   var originAutocomplete = new google.maps.places.Autocomplete(originInput);
   // Specify just the place data fields that you need.
@@ -48,14 +31,13 @@ function AutocompleteDirectionsHandler(map) {
   this.setupClickListener('walk', 'WALKING');
   this.setupClickListener('bus', 'TRANSIT');
   this.setupClickListener('car', 'DRIVING');
+  this.setupClickListener('bike', 'BICYCLING');
+  this.setupClickListener('wheelchair', 'WALKING');
 
   this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
   this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
 
-  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
-  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(
-      destinationInput);
-  this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(modeSelector);
+
 }
 
 // Sets a listener on a radio button to change the filter type on Places
