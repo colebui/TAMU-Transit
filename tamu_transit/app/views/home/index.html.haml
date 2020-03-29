@@ -8,13 +8,16 @@
     %meta{:charset => "UTF-8"}/
     %link{:href => "stylesheet.css", :rel => "stylesheet"}/
     %script{:src => "map.js"}
-    %script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyDutuTXuuUC-5ywb9P6j4OOs7u_sliwfwM&callback=initMap"}
+    %script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyDutuTXuuUC-5ywb9P6j4OOs7u_sliwfwM&libraries=places&callback=initMap"}
       :cdata
     %link{:href => "https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css", :rel => "stylesheet"}/
     %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
   %body
     #menu.menu
+      
+        
+
       .options
         %nav
           %button#bus.button.bus{:onclick => "busButton()"}
@@ -27,8 +30,8 @@
             %i.fa.fa-car
           %button#wheelchair.button.wheelchair{:onclick => "wheelchairButton()"}
             %i.fa.fa-wheelchair-alt
-      %input#currentLocation.currentLocation{:onclick => "firstbox()"}/
-      %input#destination.destination{:onclick => "secondbox()"}/
+      %input#currentLocation.currentLocation{:placeholder => "Enter an origin location", :type => "text", :onclick => "firstbox()"}/
+      %input#destination.destination{:placeholder => "Enter a destination location", :type => "text", :onclick => "secondbox()"}/
       %button#search1.Directions{:onclick => "Directions()", :style => "visibility: visible;"}
         %i.material-icons{:style => "font-size: 30px; color: rgb(122, 0, 0);; position: absolute; right: 5px; top: 5px;"} directions
       %button#search2.Directions2{:onclick => "Directions()", :style => "visibility: hidden;"}
