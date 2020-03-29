@@ -36,9 +36,9 @@
       #VeoOption.checkbox{:style => "visibility: hidden;"}
         %input#VeoRide.larger{:name => "VeoRide", :type => "checkbox", :value => "Bike", :width => "100px"}/
         %label{:for => "VeoRide"}
-          %img{:height => "30", :src => "VeoRide_Logo.png", :width => "auto"}/
+          %img{:height => "30", :src => "http://dw4ygg83x3mfl.cloudfront.net/VeoRide_Logo.png", :width => "auto"}/
       #output.directions
-    %button#menubtn.menubtn{:onclick => "openMenu()"}
-      %i.fa.fa-caret-right{:style => "font-size:24px"}
+    %button#menubtn.menubtn{:onclick => "closeMenu()"}
+      %i.fa.fa-caret-left{:style => "font-size:24px"}
     #map
     %script{:src => "buttons.js"}
