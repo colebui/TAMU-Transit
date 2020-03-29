@@ -15,6 +15,7 @@ function AutocompleteDirectionsHandler(map) {
   this.directionsService = new google.maps.DirectionsService;
   this.directionsRenderer = new google.maps.DirectionsRenderer;
   this.directionsRenderer.setMap(map);
+  this.directionsRenderer.setPanel(document.getElementById('output'));
 
   var originInput = document.getElementById('currentLocation');
   var destinationInput = document.getElementById('destination');

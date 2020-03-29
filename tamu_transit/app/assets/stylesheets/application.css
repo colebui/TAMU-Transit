@@ -93,6 +93,7 @@
 .options {
     width: 100%;
     text-align:left;
+    overflow: auto;
     /* border: 2px solid yellow; */
 }
 
@@ -103,6 +104,7 @@
     border: 2px solid black;
     position: relative;
     left: 15px;
+    overflow: auto;
 }
 
 label{
