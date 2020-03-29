@@ -1,6 +1,5 @@
 
 function openMenu(){
-    console.log("in");
     document.getElementById('menubtn').style.left = "385px";
     document.getElementById('menubtn').innerHTML = "<i class=\"fa fa-caret-left\" style=\"font-size:24px\"></i>";
     document.getElementById("menubtn").setAttribute("onClick","closeMenu()");
@@ -24,8 +23,6 @@ function busButton(){//put all functions for bus button here
     document.getElementById("walk").style.color = "#a7a7a7";
     document.getElementById("car").style.color = "#a7a7a7";
     document.getElementById("wheelchair").style.color = "#a7a7a7";
-    document.getElementById("output").innerHTML = "<h1>  Bus Tab </h1>";
-
 }
 
 function bikeButton(){//put all functions for bike button here
@@ -35,8 +32,6 @@ function bikeButton(){//put all functions for bike button here
     document.getElementById("walk").style.color = "#a7a7a7";
     document.getElementById("car").style.color = "#a7a7a7";
     document.getElementById("wheelchair").style.color = "#a7a7a7";
-    document.getElementById("output").innerHTML = "<h1>  Bike Tab </h1>";
-
 }
 
 function walkButton(){//put all functions for walking button here
@@ -46,8 +41,6 @@ function walkButton(){//put all functions for walking button here
     document.getElementById("walk").style.color = "Black";
     document.getElementById("car").style.color = "#a7a7a7";
     document.getElementById("wheelchair").style.color = "#a7a7a7";
-    document.getElementById("output").innerHTML = "<h1>  Walk Tab </h1>";
-
 }
 
 function carButton(){//put all functions for car button here
@@ -57,8 +50,6 @@ function carButton(){//put all functions for car button here
     document.getElementById("walk").style.color = "#a7a7a7";
     document.getElementById("car").style.color = "Black";
     document.getElementById("wheelchair").style.color = "#a7a7a7";
-
-    document.getElementById("output").innerHTML = "<h1>  Car Tab </h1>";
 }
 
 function wheelchairButton(){//put all functions for wheelchair accessible button here
@@ -68,9 +59,6 @@ function wheelchairButton(){//put all functions for wheelchair accessible button
     document.getElementById("walk").style.color = "#a7a7a7";
     document.getElementById("car").style.color = "#a7a7a7";
     document.getElementById("wheelchair").style.color = "Black";
-
-    document.getElementById("output").innerHTML = "<h1>  Wheelchair Tab </h1>";
-    
 }
 
 function firstbox(){
