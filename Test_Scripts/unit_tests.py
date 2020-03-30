@@ -43,14 +43,14 @@ class unit_tests(unittest.TestCase):
 
     def test_start(self):
         map = AggieMap()
-        result = map.send_key_start('Zachr')
+        result = map.send_start('Zachr')
         time.sleep(TIME_FOR_TEST)
 
         self.assertEqual(result, 'Passed')
 
     def test_end(self):
         map = AggieMap()
-        result = map.send_key_end("Mosh")
+        result = map.send_end("Mosh")
         time.sleep(TIME_FOR_TEST)
 
         self.assertEqual(result, 'Passed')
