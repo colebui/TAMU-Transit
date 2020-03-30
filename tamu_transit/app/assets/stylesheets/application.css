@@ -1,11 +1,11 @@
 #map {
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: 408px;
     bottom: 0px;
     right: 0;
     height: 100%;
-    width: 100%;
+    width: auto;
 
     transition: left 1s;
     transition: right 1s;
