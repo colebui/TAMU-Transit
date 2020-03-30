@@ -6,8 +6,6 @@
     %meta{:content => "initial-scale=1.0", :name => "viewport"}/
     %script{:src => "https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"}
     %meta{:charset => "UTF-8"}/
-    %link{:href => "stylesheet.css", :rel => "stylesheet"}/
-    %script{:src => "map.js"}
     %script{:async => "", :defer => "defer", :src => "https://maps.googleapis.com/maps/api/js?key=AIzaSyDutuTXuuUC-5ywb9P6j4OOs7u_sliwfwM&libraries=places&callback=initMap"}
       :cdata
     %link{:href => "https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css", :rel => "stylesheet"}/
@@ -44,4 +42,3 @@
     %button#menubtn.menubtn{:onclick => "closeMenu()"}
       %i.fa.fa-caret-left{:style => "font-size:24px"}
     #map
-    %script{:src => "buttons.js"}
