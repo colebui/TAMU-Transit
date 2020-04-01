@@ -1,3 +1,11 @@
+#nav {
+    display: flex; 
+    padding-top: 20px;
+    padding-bottom: 1px;
+    justify-content: space-evenly;
+}
+
+
 #map {
     position: absolute;
     top: 0px;
@@ -16,7 +24,7 @@
     position: absolute;
     width: 408px;
     height: 100%;
-    background-color: rgb(122, 0, 0);
+    background: linear-gradient(to bottom, rgb(122,0,0) 0px,rgb(122,0,0) 200px, 200px,white 200px,white 100%);
     left: 0px;
     top: 0;
     transition: left 1s;
@@ -26,7 +34,8 @@
 }
 
 .menubtn {
-    background: none rgb(255, 255, 255);
+    border-color:rgb(235,232,224) !important;
+    color:  rgb(122,0,0) !important;
     border: 0px;
     padding: 0px;
     position: absolute;
@@ -40,40 +49,29 @@
     top: 5px;
     left: 385px;
     transition: left 1s;
-
+    background-color: rgb(235,232,224) !important;
+    border-color:rgb(235,232,224) !important;
     z-index: 99;
 }
 
-.nav {
-    list-style: none;
-    text-align: center;
-    display: flex;
-    justify-content: center;
+
+
+.btn-success {
+  background-color: rgb(122,0,0) !important;
+  color: white !important;
+  border-color:rgb(122,0,0) !important;
+  border-radius: 22px  !important;
+  width: 45px;
+  height: 45px;
+  text-align: center !important
 }
 
-.button {
-    display: inline-flex;
-    background-color: #f7f7f7;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#f7f7f7), to(#e7e7e7));
-    background-image: -webkit-linear-gradient(top, #f7f7f7, #e7e7e7);
-    background-image: -moz-linear-gradient(top, #f7f7f7, #e7e7e7);
-    background-image: -ms-linear-gradient(top, #f7f7f7, #e7e7e7);
-    background-image: -o-linear-gradient(top, #f7f7f7, #e7e7e7);
-    color: #a7a7a7;
-    margin: 10px;
-    width: 30px;
-    height: 30px;
-    position: relative;
-    text-align: center;
-    line-height: 30px;
-    border-radius: 50%;
-    box-shadow: 0px 3px 8px #aaa, inset 0px 2px 3px #fff;
-}
-
-.button:hover {
-    text-decoration: none;
-    color: #555;
-    background: #f5f5f5;
+.btn-success:focus {
+  background-color: rgb(235,232,224) !important;
+  border-color:rgb(235,232,224) !important;
+  color:  rgb(122,0,0)  !important;
+  text-align: center !important;
+  outline:0 !important;
 }
 
 .currentLocation {
@@ -168,4 +166,34 @@ input.larger{
     height: 22px;
     position: relative;
     left: 12px;
+}
+
+input {
+    outline:0 !important;
+}
+
+
+#search1 {
+    visibility: visible; 
+    top: 74px;
+    padding-bottom: 23px;
+}
+
+#search2{
+    visibility: hidden; 
+    top: 134px;
+    padding-bottom: 23px;
+}
+
+#directions{
+    font-size: 30px; 
+    color: rgb(122, 0, 0);
+    position: absolute; 
+    right: 5px; 
+    top: 5px;
+}
+
+#VeoOption{
+    visibility: hidden;
+    left: 25px;
 }
