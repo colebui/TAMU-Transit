@@ -11,30 +11,35 @@
     %link{:href => "https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css", :rel => "stylesheet"}/
     %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
+    %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css", :rel => "stylesheet"}/
+
+    %div{:onload => "busButton()"}
+
   %body
     #menu.menu
       
         
 
       .options
-        %nav
-          %button#bus.button.bus{:onclick => "busButton()"}
-            %i.fa.fa-bus
-          %button#bike.button.bike{:onclick => "bikeButton()"}
-            %i.fa.fa-bicycle
-          %button#walk.button.walk{:onclick => "walkButton()"}
-            %i.fa.fa-blind
-          %button#car.button.car{:onclick => "carButton()"}
-            %i.fa.fa-car
-          %button#wheelchair.button.wheelchair{:onclick => "wheelchairButton()"}
-            %i.fa.fa-wheelchair-alt
+        %nav#nav{:style =>""}
+          %button#bus.btn.btn-success{:onclick => "busButton()"}
+            %i.fa.fa-bus.fa-lg
+          %button#bike.btn.btn-success{:onclick => "bikeButton()"}
+            %i.fa.fa-bicycle.fa-lg
+          %button#walk.btn.btn-success{:onclick => "walkButton()"}
+            %i.fa.fa-blind.fa-lg
+          %button#car.btn.btn-success{:onclick => "carButton()"}
+            %i.fa.fa-car.fa-lg
+          %button#wheelchair.btn.btn-success{:onclick => "wheelchairButton()"}
+            %i.fa.fa-wheelchair-alt.fa-lg
+      
       %input#currentLocation.currentLocation{:placeholder => "Enter an origin location", :type => "text", :onclick => "firstbox()"}/
       %input#destination.destination{:placeholder => "Enter a destination location", :type => "text", :onclick => "secondbox()"}/
-      %button#search1.Directions{:onclick => "Directions()", :style => "visibility: visible;"}
-        %i.material-icons{:style => "font-size: 30px; color: rgb(122, 0, 0);; position: absolute; right: 5px; top: 5px;"} directions
-      %button#search2.Directions2{:onclick => "Directions()", :style => "visibility: hidden;"}
-        %i.material-icons{:style => "font-size: 30px; color: rgb(122, 0, 0);; position: absolute; right: 5px; top: 5px;"} directions
-      #VeoOption.checkbox{:style => "visibility: hidden;"}
+      %button#search1.Directions{:onclick => "Directions()"}
+        %i.material-icons#directions directions
+      %button#search2.Directions2{:onclick => "Directions()"}
+        %i.material-icons#directions directions
+      #VeoOption.checkbox
         %input#VeoRide.larger{:name => "VeoRide", :type => "checkbox", :value => "Bike", :width => "100px"}/
         %label{:for => "VeoRide"}
           %img{:height => "30", :src => "http://dw4ygg83x3mfl.cloudfront.net/VeoRide_Logo.png", :width => "auto"}/
