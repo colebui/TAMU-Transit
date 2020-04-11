@@ -1,3 +1,7 @@
+var startLat;
+var startLng;
+var endLat;
+var endLng;
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       mapTypeControl: false,
@@ -31,11 +35,11 @@ function initMap() {
   
     var originAutocomplete = new google.maps.places.Autocomplete(originInput);
     // Specify just the place data fields that you need.
-    originAutocomplete.setFields(['place_id']);
+    originAutocomplete.setFields(['place_id', 'geometry']);
   
     var destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput);
     // Specify just the place data fields that you need.
-    destinationAutocomplete.setFields(['place_id']);
+    destinationAutocomplete.setFields(['place_id', 'geometry']);
   
     this.setupClickListener('walk', 'WALKING');
     this.setupClickListener('bus', 'TRANSIT');
@@ -105,12 +109,12 @@ function initMap() {
       }
       if (mode === 'ORIG') {
         me.originPlaceId = place.place_id;
-        me.startLat = place.geometry.location.lat();
-        me.startLng = place.geometry.location.lng();
+        startLat = place.geometry.location.lat();
+        startLng = place.geometry.location.lng();
       } else {
         me.destinationPlaceId = place.place_id;
-        me.endLat = place.geometry.location.lat();
-        me.endLng = place.geometry.location.lng();
+        endLat = place.geometry.location.lat();
+        endLng = place.geometry.location.lng();
       }
       me.route();
     });
@@ -125,7 +129,7 @@ function initMap() {
     
     
     if (this.travelMode == 'TRANSIT'){
-      var url = "https://aggiemapsapi.appspot.com/routes?startLat="+this.startLat+"&startLng="+this.startLng+"&endLat="+this.endLat+"&endLng="+this.endLng+"/weekdays";
+      var url = "https://aggiemapstest.appspot.com/routes/"+startLat+"/"+startLng+"/"+endLat+"/"+endLng+"/weekdays";
       $.ajax({
         method: "GET",
         cache: false,
@@ -138,7 +142,8 @@ function initMap() {
           var coords1 = data.coords1;
           var coords2 = data.coords2;
           var coords3 = data.coords3;
-          mapit(this.startLat, this.startLng, this.endLat, this.endLng, coords1, path1);
+          
+          mapit(startLat, startLng, endLat, endLng, coords1, path1);
         }
       });
     }
@@ -283,7 +288,7 @@ function initMap() {
           polylineOptions: busPath
         }),
       },
-
+      
       App.directionsService.route({
         origin: {lat:parseFloat(startLat),lng:parseFloat(startLng)},
         destination: {lat:coords[0][0],lng:coords[0][1]},
