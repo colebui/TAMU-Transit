@@ -2,6 +2,7 @@ var startLat;
 var startLng;
 var endLat;
 var endLng;
+var arr=[];
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       mapTypeControl: false,
@@ -130,6 +131,7 @@ function initMap() {
     
     if (this.travelMode == 'TRANSIT'){
       var url = "https://aggiemapstest.appspot.com/routes/"+startLat+"/"+startLng+"/"+endLat+"/"+endLng+"/weekdays";
+      arr = [];
       $.ajax({
         method: "GET",
         cache: false,
@@ -196,6 +198,7 @@ function initMap() {
           function(response, status) {
             if (status === 'OK') {
               me.directionsRenderer.setDirections(response);
+              displayTextDirections(me.directionsRenderer.directions.routes[0].legs[0]);
             } else {
               window.alert('Directions request failed due to ' + status);
             }
@@ -336,6 +339,8 @@ function initMap() {
           if (status == google.maps.DirectionsStatus.OK) {
             App.directionsDisplayStart.setDirections(result);
             var leg = result.routes[ 0 ].legs[ 0 ];
+            console.log("1");
+              displayTextDirections(leg);
             makeMarker( leg.start_location, circle );
             makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
             App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -366,6 +371,8 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay1.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
+              console.log("2");
+              displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
             }
@@ -382,6 +389,8 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay2.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
+              console.log("3");
+              displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
             }
@@ -398,6 +407,8 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay3.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
+              console.log("4");
+              displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
             }
@@ -413,7 +424,10 @@ function initMap() {
           function (result, status) {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay4.setDirections(result);
+              
               var leg = result.routes[ 0 ].legs[ 0 ];
+              console.log("5");
+              displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
             }
@@ -430,6 +444,8 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay5.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
+              console.log("6");
+              displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
             }
@@ -446,6 +462,8 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay6.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
+              console.log("7");
+              displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
             }
@@ -462,6 +480,8 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay7.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
+              console.log("8");
+              displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
             }
@@ -478,6 +498,8 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay8.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
+              console.log("9");
+              displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
             }
@@ -495,7 +517,72 @@ function initMap() {
           App.directionsDisplayEnd.setDirections(result);
           App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
           var leg = result.routes[ 0 ].legs[ 0 ];
+          console.log("10");
+          displayTextDirections(leg);
           makeMarker( leg.end_location, marker );
         }
       });
   };
+  
+
+  
+  function displayTextDirections(legs){
+    
+    arr.push(legs);
+    var startIdx;
+    
+    for(var i =0;i<arr.length;i++){
+      var count =0;
+      for(var j =0;j<arr.length;j++){
+        if(arr[i] != arr [j]){
+          if(arr[i].start_address != arr[j].end_address)//not start
+            count++;
+        }
+      }
+      if(count == arr.length-1)
+        startIdx = i;
+    }
+    
+    var orderedArr = [];
+    orderedArr.push(arr[startIdx]);
+      
+      
+    
+   
+    for(var j =0;j<arr.length;j++){
+      for(var i =0; i <arr.length; i++)
+      {
+        if(orderedArr[orderedArr.length-1].end_address == arr[i].start_address){
+
+          orderedArr.push(arr[i]);
+          break;
+        }
+        
+      }
+    }
+    
+    
+    
+    
+          
+      
+    var panel = document.getElementById("output");
+    panel.innerHTML = "";
+    console.log(orderedArr);
+    
+    for(var i=0;i<orderedArr.length;i++){
+      if(i!= orderedArr.length-1 && orderedArr[i].steps[0].travel_mode == "DRIVING"){
+        panel.innerHTML += "Get on bus <br>"; 
+      }
+      //if(orderedArr[i].steps[0].travel_mode != "DRIVING")
+       orderedArr[i].steps.forEach(element => panel.innerHTML += element.instructions + "<br>");
+      if(i!= orderedArr.length-1 && orderedArr[i].steps[0].travel_mode == "DRIVING"){
+        panel.innerHTML += "Get off bus <br>"; 
+      }
+    }
+    
+    
+    //console.log("worked");
+    //console.log(legs);
+    
+  }
