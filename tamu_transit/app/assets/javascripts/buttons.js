@@ -18,26 +18,29 @@ function closeMenu(){
 
 function busButton(){//put all functions for bus button here
     document.getElementById("VeoOption").style.visibility = "visible";
-
+    document.getElementById("output").innerHTML = "";
 }
 
 function bikeButton(){//put all functions for bike button here
     document.getElementById("VeoOption").style.visibility = "visible";
+    document.getElementById("output").innerHTML = "";
 
 }
 
 function walkButton(){//put all functions for walking button here
     document.getElementById("VeoOption").style.visibility = "hidden";
-
+    document.getElementById("output").innerHTML = "";
 }
 
 function carButton(){//put all functions for car button here
     document.getElementById("VeoOption").style.visibility = "hidden";
+    document.getElementById("output").innerHTML = "";
 
 }
 
 function wheelchairButton(){//put all functions for wheelchair accessible button here
     document.getElementById("VeoOption").style.visibility = "hidden";
+    document.getElementById("output").innerHTML = "";
 }
 
 function firstbox(){
