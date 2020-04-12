@@ -45,7 +45,7 @@ function initMap() {
     this.setupClickListener('bus', 'TRANSIT');
     this.setupClickListener('car', 'DRIVING');
     this.setupClickListener('bike', 'BICYCLING');
-    this.setupClickListener('wheelchair', 'WALKING');
+    this.setupClickListener('wheelchair', 'ACCESIBLE');
   
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
     this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
@@ -144,6 +144,45 @@ function initMap() {
           var coords3 = data.coords3;
           
           mapit(startLat, startLng, endLat, endLng, coords1, path1);
+        }
+      });
+    }
+    else if (this.travelMode == 'ACCESIBLE'){
+      var url = "https://aggiemapstest.appspot.com/routes/"+startLat+"/"+startLng+"/"+endLat+"/"+endLng+"/weekdays";
+      $.ajax({
+        method: "GET",
+        cache: false,
+        url: url,
+        success: function(data) {
+          var path1 = data.path1;
+          var path2 = data.path2;
+          var path3 = data.path3;
+
+          var coords1 = data.coords1;
+          var coords2 = data.coords2;
+          var coords3 = data.coords3;
+          var paths = [];
+          paths.push(path1);
+          paths.push(path2);
+          paths.push(path3);
+          var bestPath = [0,0,0];
+          for(var i = 0; i<3; i++){
+            for(var j = 1; j<paths[i].length; j+=2){
+              if(paths[i][j] == [-1]){
+                bestPath[i]++;
+              }
+            }
+          }
+          var choice = 0;
+          if(bestPath[0]<=bestPath[1] && bestPath[0]<=bestPath[2]){
+            mapit(startLat, startLng, endLat, endLng, coords1, path1);
+          }
+          else if (bestPath[1]<=bestPath[0] && bestPath[1]<=bestPath[2]){
+            mapit(startLat, startLng, endLat, endLng, coords2, path2);
+          }
+          else{
+            mapit(startLat, startLng, endLat, endLng, coords3, path3);
+          }
         }
       });
     }
