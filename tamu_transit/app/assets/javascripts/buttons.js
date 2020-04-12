@@ -70,6 +70,16 @@ function secondbox(){
 }
 
 function Directions(){
+    console.log("here")
 
+}
+
+function Flip(){
+    var text = document.getElementById('currentLocation').value;
+    var text2 = document.getElementById('destination').value;
+    document.getElementById('currentLocation').value = text2;
+    // document.getElementById('currentLocation').click();
+    document.getElementById('destination').value = text;
+    // document.getElementById('destination').click();
 }
 
