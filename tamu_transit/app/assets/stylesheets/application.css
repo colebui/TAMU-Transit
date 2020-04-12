@@ -175,6 +175,17 @@ label{
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
 }
+.flip{
+    padding:0px;
+    margin: 0px 0px 0px 5px;
+     background-color: rgb(122,0,0); /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
 
 
 
