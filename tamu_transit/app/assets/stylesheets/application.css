@@ -76,7 +76,7 @@
 }
 
 .currentLocation {
-    width: 82%;
+    width: 98% !important;
     padding: 12px 20px;
     margin: 8px 4%;
     display: inline-block;
@@ -85,6 +85,20 @@
     box-sizing: border-box;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
+    border: 2px;
+    border-color: white;
+}
+
+.destination{
+    width: 98% !important;
+    padding: 12px 20px;
+    margin: 8px 4%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    box-sizing: border-box;
     border: 2px;
     border-color: white;
 }
@@ -122,7 +136,7 @@ label{
 
 .Directions{
     position: absolute;
-    right: 17px;
+    right: 45px;
     top: 58px;
     padding: 21px 21px 19px 21px;
     border-radius: 4px;
@@ -136,7 +150,7 @@ label{
 
 .Directions2{
     position: absolute;
-    right: 17px;
+    right: 45px;
     top: 114px;
     padding: 21px 21px 19px 21px;
     border-radius: 4px;
@@ -148,19 +162,7 @@ label{
     border-bottom-left-radius: 0px;
 }
 
-.destination{
-    width: 92%;
-    padding: 12px 20px;
-    margin: 8px 4%;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
-    box-sizing: border-box;
-    border: 2px;
-    border-color: white;
-}
+
 
 input.larger{
     width: 22px;
@@ -198,4 +200,28 @@ input {
     visibility: hidden;
     left: 25px;
     padding-top:6px;
+}
+
+
+
+#container {
+    margin: auto;
+    height: 130px;
+    /*background-color: #ffcc33;*/
+
+}
+#first {
+    width: 87%;
+    float: left;
+    height: 130px;
+    /*background-color: blue;*/
+}
+#second {
+    width:13%;
+    float: right;
+    height: 130px;
+    text-align: center;
+    padding-top: 50px;
+    
+    /*background-color: green;*/
 }
