@@ -4,6 +4,7 @@ function openMenu(){
     document.getElementById('menubtn').innerHTML = "<i class=\"fa fa-caret-left\" style=\"font-size:24px\"></i>";
     document.getElementById("menubtn").setAttribute("onClick","closeMenu()");
     document.getElementById("menu").style.left = "0px";
+    document.getElementById("map").style.left = "408px"
     
 }
 
@@ -13,6 +14,7 @@ function closeMenu(){
     document.getElementById('menubtn').innerHTML = "<i class=\"fa fa-caret-right\" style=\"font-size:24px\"></i>";
     document.getElementById('menubtn').setAttribute("onClick","openMenu()");
     document.getElementById("menu").style.left = "-408px";
+    document.getElementById("map").style.left = "0px"
     
 }
 

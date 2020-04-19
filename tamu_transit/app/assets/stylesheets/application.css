@@ -9,7 +9,7 @@
 #map {
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: 408px;
     bottom: 0px;
     right: 0;
     height: 100%;
@@ -17,7 +17,7 @@
 
     transition: left 1s;
     transition: right 1s;
-    /* transition: width 1s; */
+     transition: width 1s; 
 }
 
 .menu {
@@ -56,6 +56,7 @@
     border-color:rgb(235,232,224) !important;
     z-index: 99;
     outline:0 !important;
+    
 }
 
 
@@ -67,7 +68,9 @@
   border-radius: 22px  !important;
   width: 45px;
   height: 45px;
-  text-align: center !important
+  text-align: center !important;
+  transition: left 1s;
+    transition: right 1s;
 }
 
 .btn-success:focus {
@@ -76,6 +79,8 @@
   color:  rgb(122,0,0)  !important;
   text-align: center !important;
   outline:0 !important;
+  transition: left 1s;
+    transition: right 1s;
 }
 
 .currentLocation {
@@ -383,4 +388,11 @@ input {
     left: 79px;
     font-size: 20px;
     font-weight: 1000;
+}
+
+.busVisual{
+    width: 100px;
+    height: auto;
+    position: absolute;
+    background: black;
 }
