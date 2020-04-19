@@ -4,6 +4,7 @@ var endLat;
 var endLng;
 var arr=[];
 var geo;
+var currMode;
 /*global google*/
 /*global infoWindow*/
 /*global navigator*/
