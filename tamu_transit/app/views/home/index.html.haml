@@ -16,6 +16,19 @@
     %div{:onload => "busButton()"}
 
   %body
+    %template
+      %span#tab.tab
+        %h2#time.time 12:26 PM
+        %span#dot.dot
+        %h1#start.start
+          Golden Gate Bridge
+        #visualLine.visualLine{:style => "border-left: 6px dotted #003C71;"}
+        %h2#city.city San Francisco, CA
+        %button#details.details{:onclick => "showDetails(0);"}
+          %h3#mode.mode Walk
+          %i.fa.fa-caret-down{:style => "position:relative;font-size:24px;left:-126px;top:22px;margin-top: 16px;"}
+          %p#estimate.estimate{:for => ""} About 26 min, 1.3 mi
+        #steps.steps
     #menu.menu
       
         
@@ -52,6 +65,8 @@
         %label{:for => "VeoRide"}
           %img{:height => "30", :src => "http://dw4ygg83x3mfl.cloudfront.net/VeoRide_Logo.png", :width => "auto"}/
       #output.directions
+      
+
     %button#menubtn.menubtn{:onclick => "closeMenu()"}
       %i.fa.fa-caret-left{:style => "font-size:24px"}
     #map

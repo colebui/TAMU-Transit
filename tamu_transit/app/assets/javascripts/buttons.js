@@ -24,7 +24,16 @@ function busButton(){//put all functions for bus button here
 function bikeButton(){//put all functions for bike button here
     document.getElementById("VeoOption").style.visibility = "visible";
     document.getElementById("output").innerHTML = "";
-
+   
+   /*for testing
+   var ins1 = [instruction = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"];
+   var ins2 = [instruction = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"];
+   var ins3 = [instruction = "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"];
+    var steps = [ ins1,ins2,ins3];
+    var step = [instructions = ["one step is all it takes to break this thing smh"]];
+    addDirectionLeg("12:26 PM","Somewhere in College stattion you know","her is where you would put the city",0,"WALKING","ABout 1hr 20 min, 10 miles",steps);
+    addDirectionLeg("12:26 PM","Somewhere in College stattion you know","her is where you would put the city",1,"not","ABout 1hr 20 min, 10 miles",step);
+    */
 }
 
 function walkButton(){//put all functions for walking button here
@@ -70,8 +79,6 @@ function secondbox(){
 }
 
 function Directions(){
-    console.log("here")
-
 }
 
 function Flip(){
@@ -83,3 +90,37 @@ function Flip(){
     // document.getElementById('destination').click();
 }
 
+function showDetails(idx){
+    //console.log("open"+idx);
+    
+    var d = document.getElementsByClassName("tab");
+    
+
+    var numDir = d[idx].getElementsByTagName("DIV")[1].getElementsByClassName("step").length;
+    var h =0;
+    for(var i =0;i<numDir;i++){
+        if(d[idx].getElementsByTagName("DIV")[1].getElementsByClassName("step")[i].getElementsByTagName("DIV").length >=1){
+            h+=57.4;
+        }else{
+            h+=41.4;
+        }
+    }
+    d[idx].getElementsByTagName("DIV")[1].style.height = h+"px";//div called steps
+    d[idx].getElementsByTagName("DIV")[0].style.height = 121+h+"px"; //dotted line Visual
+    d[idx].getElementsByTagName("button")[0].setAttribute("onClick","hideDetails(" +idx+")");//changes function on
+    
+    d[idx].style.height= 156+h+"px";
+    
+}
+
+function hideDetails(idx){
+    //console.log("close" + idx);
+    var d = document.getElementsByClassName("tab");
+    
+    //console.log(d);
+
+    d[idx].getElementsByTagName("DIV")[1].style.height = "0px";
+    d[idx].getElementsByTagName("DIV")[0].style.height = "121px";
+    d[idx].getElementsByTagName("button")[0].setAttribute("onClick","showDetails(" +idx+")");
+    d[idx].style.height= "156px";
+}
