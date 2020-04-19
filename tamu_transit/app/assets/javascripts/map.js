@@ -3,6 +3,44 @@ var startLng;
 var endLat;
 var endLng;
 var arr=[];
+var geo;
+/*global google*/
+/*global infoWindow*/
+/*global navigator*/
+/*global $*/
+/*global map*/
+/*global */
+/*global */
+var getParams = function (url) {
+	var params = {};
+	var parser = document.createElement('a');
+	parser.href = url;
+	var query = parser.search.substring(1);
+	var vars = query.split('&');
+	for (var i = 0; i < vars.length; i++) {
+		var pair = vars[i].split('=');
+		params[pair[0]] = decodeURIComponent(pair[1]);
+	}
+	return params;
+};
+var startURL = "",endURL="";
+var params = getParams(window.location.href);
+
+
+if(params.start && params.end){
+  startURL = params.start;
+  endURL = params.start;
+}
+
+console.log(startURL);
+
+
+
+
+
+
+
+
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       mapTypeControl: false,
@@ -11,12 +49,17 @@ function initMap() {
     });
 
     infoWindow = new google.maps.InfoWindow;
+    
   
     new AutocompleteDirectionsHandler(map);
+    if(startURL.localeCompare(endURL) != 0){
+      console.log("worked");
+      bikeButton();
+    }
   }
   function AutocompleteDirectionsHandler(map) {
     
-    
+  
     
 
     this.map = map;
@@ -27,7 +70,7 @@ function initMap() {
     this.directionsRenderer = new google.maps.DirectionsRenderer;
     var geocoder = new google.maps.Geocoder();
     this.directionsRenderer.setMap(map);
-    this.directionsRenderer.setPanel(document.getElementById('output'));
+    //this.directionsRenderer.setPanel(document.getElementById('output'));
 
     
   
@@ -41,16 +84,7 @@ function initMap() {
     var destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput);
     // Specify just the place data fields that you need.
     destinationAutocomplete.setFields(['place_id', 'geometry']);
-  
-    this.setupClickListener('walk', 'WALKING');
-    this.setupClickListener('bus', 'TRANSIT');
-    this.setupClickListener('car', 'DRIVING');
-    this.setupClickListener('bike', 'BICYCLING');
-    this.setupClickListener('wheelchair', 'ACCESIBLE');
-  
-    this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
-    this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
-
+    
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(function(position) {
         var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -60,9 +94,11 @@ function initMap() {
             // if the geolocation was recognized and an address was found
             if (results[0]) {
               // add a marker to the map on the geolocated point
-              
+              geo = results[0];
+              startURL = geo.placeId;
               // compose a string with the address parts
-              var address = results[0].address_components[1].long_name+' '+results[0].address_components[0].long_name+', '+results[0].address_components[3].long_name
+              var address = results[0].address_components[1].long_name+' '+results[0].address_components[0].long_name+', '+results[0].address_components[3].long_name;
+
               document.getElementById("currentLocation").value = address;
             }
           } else {
@@ -80,6 +116,19 @@ function initMap() {
       handleLocationError(false, infoWindow, map.getCenter());
     }
   
+    this.setupClickListener('walk', 'WALKING');
+    this.setupClickListener('bus', 'TRANSIT');
+    this.setupClickListener('car', 'DRIVING');
+    this.setupClickListener('bike', 'BICYCLING');
+    this.setupClickListener('wheelchair', 'ACCESIBLE');
+    
+    
+  
+    this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
+    this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
+
+    
+
   
   }
   
@@ -339,7 +388,7 @@ function initMap() {
           if (status == google.maps.DirectionsStatus.OK) {
             App.directionsDisplayStart.setDirections(result);
             var leg = result.routes[ 0 ].legs[ 0 ];
-            console.log("1");
+            //console.log("1");
               displayTextDirections(leg);
             makeMarker( leg.start_location, circle );
             makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
@@ -371,7 +420,7 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay1.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
-              console.log("2");
+              //console.log("2");
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -389,7 +438,7 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay2.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
-              console.log("3");
+              //console.log("3");
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -407,7 +456,7 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay3.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
-              console.log("4");
+              //console.log("4");
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -426,7 +475,7 @@ function initMap() {
               App.directionsDisplay4.setDirections(result);
               
               var leg = result.routes[ 0 ].legs[ 0 ];
-              console.log("5");
+              //console.log("5");
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -444,7 +493,7 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay5.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
-              console.log("6");
+              //console.log("6");
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -462,7 +511,7 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay6.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
-              console.log("7");
+              //console.log("7");
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -480,7 +529,7 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay7.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
-              console.log("8");
+              //console.log("8");
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -498,7 +547,7 @@ function initMap() {
             if (status == google.maps.DirectionsStatus.OK) {
               App.directionsDisplay8.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
-              console.log("9");
+              //console.log("9");
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -517,7 +566,7 @@ function initMap() {
           App.directionsDisplayEnd.setDirections(result);
           App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
           var leg = result.routes[ 0 ].legs[ 0 ];
-          console.log("10");
+          //console.log("10");
           displayTextDirections(leg);
           makeMarker( leg.end_location, marker );
         }
@@ -568,21 +617,80 @@ function initMap() {
       
     var panel = document.getElementById("output");
     panel.innerHTML = "";
-    console.log(orderedArr);
+    ////console.log(orderedArr);
+    
+    var today = new Date();
+    var hr = today.getHours()%12;
+    var min = today.getMinutes()%60;
+    var time = hr + ":" + min;
+  
     
     for(var i=0;i<orderedArr.length;i++){
-      if(i!= orderedArr.length-1 && orderedArr[i].steps[0].travel_mode == "DRIVING"){
-        panel.innerHTML += "Get on bus <br>"; 
-      }
-      //if(orderedArr[i].steps[0].travel_mode != "DRIVING")
-       orderedArr[i].steps.forEach(element => panel.innerHTML += element.instructions + "<br>");
-      if(i!= orderedArr.length-1 && orderedArr[i].steps[0].travel_mode == "DRIVING"){
-        panel.innerHTML += "Get off bus <br>"; 
-      }
+      var start = orderedArr[i].start_address.split(" ");
+        if(i!=0){
+          var dur = orderedArr[i-1].duration.text.split(" ");
+          
+          min+=parseInt(dur[0]) 
+          if(min >= 60){
+            hr+= Math.floor(min/60);
+            min = min%60;
+          }
+          
+          hr= hr%12;
+          time = hr + ":" + min;
+        
+    }
+        
+    addDirectionLeg(
+      time,
+      start[0] + " "+start[1] + " " + start[2],
+      start[3]+" "+start[4],
+      i,
+      orderedArr[i].steps[0].travel_mode,
+      "About " + orderedArr[i].duration.text + ", " +orderedArr[i].distance.text,
+      orderedArr[i].steps
+      );
+      
     }
     
     
-    //console.log("worked");
-    //console.log(legs);
+    ////console.log("worked");
+    ////console.log(legs);
     
+  }
+  
+  function addDirectionLeg(time,startLocation,city,idx,mode,estimate,steps){
+    var clon = document.getElementsByTagName("template")[0];
+    clon.content.getElementById("time").innerHTML = time;
+    clon.content.getElementById("start").innerHTML = startLocation;
+    clon.content.getElementById("city").innerHTML = city;
+    clon.content.getElementById("details").setAttribute("onClick","showDetails("+idx+")");
+    clon.content.getElementById("estimate").innerHTML = estimate;
+    
+    clon.content.getElementById("steps").innerHTML = "";
+    for(var i =0;i<steps.length;i++){
+      clon.content.getElementById("steps").innerHTML+="<div class=\"step\">" + steps[i].instructions+"</div>";
+    }
+    
+    if(mode === "WALKING"){
+      clon.content.getElementById("mode").innerHTML = "Walk";
+      clon.content.getElementById("visualLine").style.borderLeft = "6px dotted #003C71";
+      clon.content.getElementById("dot").setAttribute('class', 'dot');
+      clon.content.getElementById("dot").innerHTML = "";   
+      clon.content.getElementById("visualLine").style.top = "47px";
+      clon.content.getElementById("visualLine").style.height = "121px";
+    }else{
+      clon.content.getElementById("mode").innerHTML = "Bus ##";                                                     //bus number here
+     
+      clon.content.getElementById("visualLine").style.borderLeft = "6px solid #003C71";
+      clon.content.getElementById("dot").setAttribute('class', 'stop');
+      clon.content.getElementById("dot").innerHTML = "00";                                                         ///enter bus number here
+      clon.content.getElementById("visualLine").style.top = "75px";
+      clon.content.getElementById("visualLine").style.height = "89px";
+    }
+    
+    //console.log(clon);
+    
+    var c = clon.content.cloneNode(true);
+    document.getElementById("output").appendChild(c);
   }
