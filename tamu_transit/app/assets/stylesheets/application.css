@@ -1,8 +1,14 @@
 #nav {
     display: flex; 
     padding-top: 20px;
-    padding-bottom: 1px;
+    padding-bottom: 5px;
     justify-content: space-evenly;
+    position: fixed;
+    top: -5px;
+    width: 403px;
+    background-color: rgb(122,0,0);
+    z-index: 99;
+    width: 408px;
 }
 
 
@@ -20,17 +26,23 @@
      transition: width 1s; 
 }
 
+.menu::-webkit-scrollbar {
+    display: none;
+}
+
 .menu {
     position: absolute;
     width: 408px;
     height: 100%;
-    background: linear-gradient(to bottom, rgb(122,0,0) 0px,rgb(122,0,0) 295px, 200px,white 200px,white 100%);
+    /*background: linear-gradient(to bottom, rgb(122,0,0) 0px,rgb(122,0,0) 295px, 200px,white 200px,white 100%);*/
     left: 0px;
     top: 0;
     transition: left 1s;
-    z-index: 99;
+    z-index: 95;
     
-    
+    overflow: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
 
     /*border: 2px solid black;*/
 }
@@ -54,7 +66,7 @@
     transition: right 1s;
     background-color: rgb(235,232,224) !important;
     border-color:rgb(235,232,224) !important;
-    z-index: 99;
+    z-index: 95;
     outline:0 !important;
     
 }
@@ -115,12 +127,14 @@
     width: 100%;
     text-align:left;
     overflow: auto;
+    overflow-x: hidden;
+    height: 295px;
+    overflow-y: hidden;
+    background: rgb(122,0,0);
     /* border: 2px solid yellow; */
 }
 
-.directions::-webkit-scrollbar {
-    display: none;
-}
+
 
 .directions {
     width: auto;
@@ -129,8 +143,7 @@
     position: relative;
     display: block;
     text-align: center;
-    overflow: auto;
-    -ms-overflow-style: none;
+    
 }
 
 #birthdaytime{
@@ -145,6 +158,8 @@
     box-sizing: border-box;
     border: 2px;
     border-color: white;
+    position: relative;
+    top: 191px;
 }
 
 label{
@@ -212,13 +227,13 @@ input {
 
 #search1 {
     visibility: visible; 
-    top: 74px;
+    top: 8px;
     padding-bottom: 23px;
 }
 
 #search2{
     visibility: hidden; 
-    top: 134px;
+    top: 68px;
     padding-bottom: 23px;
 }
 
@@ -235,29 +250,40 @@ input {
     left: 25px;
     padding-top:6px;
     margin: 55px 0px 10px 0px;
+    top: 144px;
 }
 
 
 
 #container {
     margin: auto;
-    height: 130px;
+    height: 122px;
+    position: fixed;
+    top: 64px;
+    width: 408px;
+    z-index: 99;
+    background: rgb(122,0,0);
     /*background-color: #ffcc33;*/
 
 }
 #first {
     width: 87%;
     float: left;
-    height: 130px;
+    height: 122px;
     /*background-color: blue;*/
 }
 #second {
-    width:13%;
     float: right;
     height: 130px;
     text-align: center;
     padding-top: 50px;
-    
+    position: absolute;
+    left: 357px;
+    top: 65px;
+    position: fixed;
+    left: 365px;
+    top: 77px;
+    z-index: 99;
     /*background-color: green;*/
 }
 
@@ -390,9 +416,20 @@ input {
     font-weight: 1000;
 }
 
-.busVisual{
-    width: 100px;
-    height: auto;
+#busVisual{
     position: absolute;
-    background: black;
+    background: white;
+    z-index: 96;
+    left: 63px;
+    top: 42px;
+    font-size: 13px;
+}
+
+#busVisualMarker{
+    position: absolute;
+    z-index: 95;
+    left: 60px;
+    top: 16px;
+    font-size: 56px;
+    transform: rotate(245deg);
 }
