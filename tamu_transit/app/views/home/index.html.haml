@@ -34,7 +34,8 @@
         %i#busVisualMarker.fa.fa-map-marker
     #menu.menu
       
-      
+      %button#backToTop.backToTop{:onclick => "backToTop()"}
+        %i.fa.fa-caret-up{:style => "font-size:24px"}  
       
       .options
         %nav#nav{:style =>""}
@@ -68,13 +69,12 @@
           %label{:for => "VeoRide"}
             %img{:height => "30", :src => "http://dw4ygg83x3mfl.cloudfront.net/VeoRide_Logo.png", :width => "auto"}/
       #output.directions
-        
+      
       
 
       
 
     %button#menubtn.menubtn{:onclick => "closeMenu()"}
       %i.fa.fa-caret-left{:style => "font-size:24px"}
-    %button#backToTop.backToTop{:onclick => "backToTop()"}
-      %i.fa.fa-caret-up{:style => "font-size:24px"}
+    
     #map

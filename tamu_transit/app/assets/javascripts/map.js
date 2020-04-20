@@ -721,10 +721,9 @@ function initMap() {
     clon.content.getElementById("city").innerHTML = city;
     clon.content.getElementById("details").setAttribute("onClick","showDetails("+idx+")");
     clon.content.getElementById("estimate").innerHTML = estimate;
-    console.log("all " + totalTime +"s");
-    console.log(clon.content.getElementById("busVisual").style.transition);
+    
     clon.content.getElementById("busVisual").style.transition = "all " + totalTime +"s";
-    console.log(clon.content.getElementById("busVisual").style.transition);
+    
     
     //var numTabs = document.getElementsByTagName("span").getElementsByClassName("tab").length;
     //console.log(numTabs)
