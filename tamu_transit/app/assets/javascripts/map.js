@@ -4,7 +4,7 @@ var endLat;
 var endLng;
 var arr=[];
 var geo;
-var currMode;
+var currMode ='WALKING';
 /*global google*/
 /*global infoWindow*/
 /*global navigator*/
@@ -122,6 +122,10 @@ function initMap() {
     this.setupClickListener('car', 'DRIVING');
     this.setupClickListener('bike', 'BICYCLING');
     this.setupClickListener('wheelchair', 'ACCESIBLE');
+    this.setupClickListener('search1',currMode);
+    this.setupClickListener('search2',currMode);
+    
+    this.setupSwapListener('flip');
     
     
   
@@ -133,12 +137,26 @@ function initMap() {
   
   }
   
+  AutocompleteDirectionsHandler.prototype.setupSwapListener = function(id) {
+        var button = document.getElementById(id);
+        var me = this;
+        
+        button.addEventListener('click', function() {
+          me.mode = currMode;
+          var temp = me.originPlaceId;
+          me.originPlaceId = me.destinationPlaceId;
+          me.destinationPlaceId = temp;
+          me.route();
+        });
+  };
+  
   // Sets a listener on a radio button to change the filter type on Places
   // Autocomplete.
   AutocompleteDirectionsHandler.prototype.setupClickListener = function(
       id, mode) {
     var radioButton = document.getElementById(id);
     var me = this;
+      currMode = mode;
   
     radioButton.addEventListener('click', function() {
       me.travelMode = mode;
@@ -621,26 +639,42 @@ function initMap() {
     ////console.log(orderedArr);
     
     var today = new Date();
+
+    
+    
+
+    var sec = today.getSeconds();
     var hr = today.getHours()%12;
     var min = today.getMinutes()%60;
-    var time = hr + ":" + min;
+    var time = hr + ":" + min +" PM";
+    
+    var currTimeInSec = sec+ min*60 + hr*3600;
+    
+    
+  
   
     
     for(var i=0;i<orderedArr.length;i++){
       var start = orderedArr[i].start_address.split(" ");
-        if(i!=0){
-          var dur = orderedArr[i-1].duration.text.split(" ");
+        
+          var dur = orderedArr[i].duration.text.split(" ");
           
+          console.log("adding "+ dur[0]);
           min+=parseInt(dur[0]) 
           if(min >= 60){
             hr+= Math.floor(min/60);
             min = min%60;
-          }
           
-          hr= hr%12;
-          time = hr + ":" + min;
+          
+          hr= hr%24;
+          time = hr + ":" + min + " PM";
         
     }
+    var endTimeInSec = sec+ min*60 + hr*3600;
+    
+    
+    
+    console.log(endTimeInSec-currTimeInSec);//time required to make trip
         
     addDirectionLeg(
       time,
@@ -651,7 +685,6 @@ function initMap() {
       "About " + orderedArr[i].duration.text + ", " +orderedArr[i].distance.text,
       orderedArr[i].steps
       );
-      
     }
     
     
