@@ -4,6 +4,9 @@ var endLat;
 var endLng;
 var arr=[];
 var geo;
+
+var route1 = {"coords1":[[30.615178,-96.337378],[30.605585,-96.347413]],"coords2":[[30.613928,-96.339018],[30.614133,-96.343276],[30.605585,-96.347413]],"coords3":[[30.615178,-96.337378],[30.604797,-96.345232]],"coords4":[[30.613928,-96.339018],[30.595977,-96.339922],[30.599502,-96.341795],[30.607069,-96.344685],[30.607005,-96.345],[30.604797,-96.345232]],"path1":["Commons",[1],"Reed Arena - IB"],"path2":["Trigon",[-1],"MSC",[5],"Reed Arena - IB"],"path3":["Commons",[1],"Lot 100G"],"path4":["Trigon",[36],"South East - Park West 2",[-1],"North West - Park West - OB",[8],"Rec Center - IB",[-1],"Rec Center - OB",[1],"Lot 100G"]};
+displayRoutes(route1);
 var currMode ='WALKING';
 /*global google*/
 /*global infoWindow*/
@@ -133,7 +136,13 @@ function initMap() {
     this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
 
     
-
+    document.getElementById("menu").addEventListener('scroll',function(e){
+      if(document.getElementById("menu").scrollTop < 110){
+        document.getElementById("backToTop").style.visibility = "hidden";
+      }else{
+        document.getElementById("backToTop").style.visibility = "visible";
+      }
+    });
   
   }
   
@@ -408,7 +417,8 @@ function initMap() {
             App.directionsDisplayStart.setDirections(result);
             var leg = result.routes[ 0 ].legs[ 0 ];
             //console.log("1");
-              displayTextDirections(leg);
+            console.log(result);
+            displayTextDirections(leg);
             makeMarker( leg.start_location, circle );
             makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
             App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -440,6 +450,7 @@ function initMap() {
               App.directionsDisplay1.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("2");
+              console.log(result);
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -458,6 +469,7 @@ function initMap() {
               App.directionsDisplay2.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("3");
+              console.log(result);
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -476,6 +488,7 @@ function initMap() {
               App.directionsDisplay3.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("4");
+              console.log(result);
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -495,6 +508,7 @@ function initMap() {
               
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("5");
+              console.log(result);
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -513,6 +527,7 @@ function initMap() {
               App.directionsDisplay5.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("6");
+              console.log(result);
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -531,6 +546,7 @@ function initMap() {
               App.directionsDisplay6.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("7");
+              console.log(result);
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -549,6 +565,7 @@ function initMap() {
               App.directionsDisplay7.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("8");
+              console.log(result);
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -567,6 +584,7 @@ function initMap() {
               App.directionsDisplay8.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("9");
+              console.log(result);
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -586,6 +604,7 @@ function initMap() {
           App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
           var leg = result.routes[ 0 ].legs[ 0 ];
           //console.log("10");
+          console.log(result);
           displayTextDirections(leg);
           makeMarker( leg.end_location, marker );
         }
@@ -673,8 +692,9 @@ function initMap() {
     var endTimeInSec = sec+ min*60 + hr*3600;
     
     
-    
+    var totalTime = endTimeInSec-currTimeInSec
     console.log(endTimeInSec-currTimeInSec);//time required to make trip
+    
         
     addDirectionLeg(
       time,
@@ -683,7 +703,8 @@ function initMap() {
       i,
       orderedArr[i].steps[0].travel_mode,
       "About " + orderedArr[i].duration.text + ", " +orderedArr[i].distance.text,
-      orderedArr[i].steps
+      orderedArr[i].steps,
+      totalTime
       );
     }
     
@@ -693,14 +714,23 @@ function initMap() {
     
   }
   
-  function addDirectionLeg(time,startLocation,city,idx,mode,estimate,steps){
+  function addDirectionLeg(time,startLocation,city,idx,mode,estimate,steps,totalTime){
     var clon = document.getElementsByTagName("template")[0];
     clon.content.getElementById("time").innerHTML = time;
     clon.content.getElementById("start").innerHTML = startLocation;
     clon.content.getElementById("city").innerHTML = city;
     clon.content.getElementById("details").setAttribute("onClick","showDetails("+idx+")");
     clon.content.getElementById("estimate").innerHTML = estimate;
+    console.log("all " + totalTime +"s");
+    console.log(clon.content.getElementById("busVisual").style.transition);
+    clon.content.getElementById("busVisual").style.transition = "all " + totalTime +"s";
+    console.log(clon.content.getElementById("busVisual").style.transition);
     
+    //var numTabs = document.getElementsByTagName("span").getElementsByClassName("tab").length;
+    //console.log(numTabs)
+    clon.content.getElementById("busVisual").style.top =  "px";
+    console.log(clon.content.getElementById("busVisual").style.top);
+
     clon.content.getElementById("steps").innerHTML = "";
     for(var i =0;i<steps.length;i++){
       clon.content.getElementById("steps").innerHTML+="<div class=\"step\">" + steps[i].instructions+"</div>";
@@ -727,4 +757,59 @@ function initMap() {
     
     var c = clon.content.cloneNode(true);
     document.getElementById("output").appendChild(c);
+  }
+  
+  function displayRoutes(routes){
+    console.log("worked");
+    var size = 0;
+    var paths = [];
+    
+    if(routes.path1){
+      paths.push(routes.path1);
+      size = 1;
+    }
+    if(routes.path2){
+      paths.push(routes.path2);
+      size = 2;
+    }
+    if(routes.path3){
+      paths.push(routes.path3);
+      size = 3;
+    }
+    if(routes.path4){
+      paths.push(routes.path4);
+      size = 4;
+    }
+    if(routes.path5){
+      paths.push(routes.path5);
+      size = 5;
+    }
+    if(routes.path6){
+      paths.push(routes.path6);
+      size = 6;
+    }
+    if(routes.path7){
+      paths.push(routes.path7);
+      size = 7;
+    }
+    if(routes.path8){
+      paths.push(routes.path8);
+      size = 8;
+    }
+    if(routes.path9){
+      paths.push(routes.path9);
+      size = 9;
+    }
+    if(routes.path10){
+      paths.push(routes.path10);
+      size = 10;
+    }
+    
+    console.log(size);
+    console.log(paths);
+    
+    
+    
+    
+
   }

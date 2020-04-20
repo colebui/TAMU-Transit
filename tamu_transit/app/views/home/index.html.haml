@@ -29,8 +29,9 @@
           %i.fa.fa-caret-down{:style => "position:relative;font-size:24px;left:-126px;top:22px;margin-top: 16px;"}
           %p#estimate.estimate{:for => ""} About 26 min, 1.3 mi
         #steps.steps
-      %i#busVisual.fa.fa-bus.fa-lg
-      %i#busVisualMarker.fa.fa-map-marker
+      #busVisual.busVisual
+        %i#busIcon.fa.fa-bus.fa-lg
+        %i#busVisualMarker.fa.fa-map-marker
     #menu.menu
       
       
@@ -74,4 +75,6 @@
 
     %button#menubtn.menubtn{:onclick => "closeMenu()"}
       %i.fa.fa-caret-left{:style => "font-size:24px"}
+    %button#backToTop.backToTop{:onclick => "backToTop()"}
+      %i.fa.fa-caret-up{:style => "font-size:24px"}
     #map
