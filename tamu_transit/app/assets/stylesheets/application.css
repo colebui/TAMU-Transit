@@ -462,6 +462,7 @@ input {
     left: 359px;
     bottom: 11px;
     z-index: 99;
+    transition: left 1s;
     
     visibility: hidden;
 }

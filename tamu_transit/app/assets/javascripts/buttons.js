@@ -9,6 +9,7 @@ function openMenu(){
     document.getElementById("map").style.left = "408px";
     //document.getElementById("container").style.left = "0px";
     document.getElementById("second").style.left = "365px";
+    document.getElementById("backToTop").style.left = "359px";
     
 }
 
@@ -22,6 +23,7 @@ function closeMenu(){
     document.getElementById("map").style.left = "0px";
     //document.getElementById("container").style.left = "-408px";
     document.getElementById("second").style.left = "-43px";
+    document.getElementById("backToTop").style.left = "-49px";
     
 }
 
