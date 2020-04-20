@@ -1,20 +1,27 @@
 
 function openMenu(){
+    document.getElementById("menubtn").style.transition = "left 1s";
     document.getElementById('menubtn').style.left = "385px";
     document.getElementById('menubtn').innerHTML = "<i class=\"fa fa-caret-left\" style=\"font-size:24px\"></i>";
     document.getElementById("menubtn").setAttribute("onClick","closeMenu()");
     document.getElementById("menu").style.left = "0px";
-    document.getElementById("map").style.left = "408px"
+    document.getElementById("map").style.transition = "left 1s";
+    document.getElementById("map").style.left = "408px";
+    //document.getElementById("container").style.left = "0px";
+    document.getElementById("second").style.left = "365px";
     
 }
 
 function closeMenu(){
-    
+    document.getElementById("menubtn").style.transition = "left 1s";
     document.getElementById('menubtn').style.left = "0px";
     document.getElementById('menubtn').innerHTML = "<i class=\"fa fa-caret-right\" style=\"font-size:24px\"></i>";
     document.getElementById('menubtn').setAttribute("onClick","openMenu()");
     document.getElementById("menu").style.left = "-408px";
-    document.getElementById("map").style.left = "0px"
+    document.getElementById("map").style.transition = "left 1s";
+    document.getElementById("map").style.left = "0px";
+    //document.getElementById("container").style.left = "-408px";
+    document.getElementById("second").style.left = "-43px";
     
 }
 
@@ -91,6 +98,7 @@ function Flip(){
     document.getElementById('destination').value = text;
     // document.getElementById('destination').click();
 }
+var heightChanged;
 
 function showDetails(idx){
     //console.log("open"+idx);
@@ -112,6 +120,8 @@ function showDetails(idx){
     d[idx].getElementsByTagName("button")[0].setAttribute("onClick","hideDetails(" +idx+")");//changes function on
     
     d[idx].style.height= 156+h+"px";
+    heightChanged = h;
+    document.getElementById("menu").height+=heightChanged;
     
 }
 
@@ -125,6 +135,7 @@ function hideDetails(idx){
     d[idx].getElementsByTagName("DIV")[0].style.height = "121px";
     d[idx].getElementsByTagName("button")[0].setAttribute("onClick","showDetails(" +idx+")");
     d[idx].style.height= "156px";
+    document.getElementById("menu").height-=heightChanged;
 }
 
 function backToTop(){

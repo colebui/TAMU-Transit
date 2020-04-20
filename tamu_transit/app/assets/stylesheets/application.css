@@ -66,7 +66,7 @@
     transition: right 1s;
     background-color: rgb(235,232,224) !important;
     border-color:rgb(235,232,224) !important;
-    z-index: 95;
+    z-index: 99;
     outline:0 !important;
     
 }
@@ -284,6 +284,7 @@ input {
     left: 365px;
     top: 77px;
     z-index: 99;
+    transition: left 1s; 
     /*background-color: green;*/
 }
 
@@ -444,7 +445,7 @@ input {
     color: rgb(122,0,0) !important;
     border: 0px;
     padding: 0px;
-    position: absolute;
+    position: fixed;
     cursor: pointer;
     user-select: none;
     border-radius: 2px;
