@@ -126,3 +126,12 @@ function hideDetails(idx){
     d[idx].getElementsByTagName("button")[0].setAttribute("onClick","showDetails(" +idx+")");
     d[idx].style.height= "156px";
 }
+
+function backToTop(){
+    console.log(document.getElementById("menu").scrollTop);
+    document.getElementById("menu").scrollTop = 0;
+}
+
+
+
+
