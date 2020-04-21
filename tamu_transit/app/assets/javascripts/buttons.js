@@ -1,4 +1,6 @@
 
+
+
 function openMenu(){
     document.getElementById("menubtn").style.transition = "left 1s";
     document.getElementById('menubtn').style.left = "385px";
@@ -30,6 +32,8 @@ function closeMenu(){
 function busButton(){//put all functions for bus button here
     document.getElementById("VeoOption").style.visibility = "visible";
     document.getElementById("output").innerHTML = "";
+    
+    
 }
 
 function bikeButton(){//put all functions for bike button here
@@ -147,11 +151,19 @@ function backToTop(){
 
 function loadingScreen(){
     
-    setTimeout(function(){ 
-        document.getElementById("loading").style.transition = "left 1s";
-        document.getElementById("loading").style.left = "-408px";
-        
-    }, 500);
+var elem = document.getElementById("loading");   
+  var pos = 3;
+  var id = setInterval(frame, 0);
+  function frame() {
+    if (pos == -408) {
+      clearInterval(id);
+    } else {
+      pos--; 
+      elem.style.left = pos + 'px'; 
+    }
+  }
+    
+      
     
 }
 
