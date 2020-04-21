@@ -145,6 +145,15 @@ function backToTop(){
     document.getElementById("menu").scrollTop = 0;
 }
 
+function loadingScreen(){
+    
+    setTimeout(function(){ 
+        document.getElementById("loading").style.transition = "left 1s";
+        document.getElementById("loading").style.left = "-408px";
+        
+    }, 500);
+    
+}
 
 
 

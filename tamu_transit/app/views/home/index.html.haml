@@ -14,8 +14,14 @@
     %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css", :rel => "stylesheet"}/
 
     %div{:onload => "busButton()"}
+    %link{:href => "favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
 
-  %body
+
+  %body{:onload => "loadingScreen()"}
+    #loading.loading
+      .white
+      %img{:height => "408", :src => "TAMU-Logo.jpg", :width => "auto"}/
+
     %template
       %span#tab.tab
         %h2#time.time 12:26 PM

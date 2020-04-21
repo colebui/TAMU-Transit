@@ -139,6 +139,7 @@ function initMap() {
     document.getElementById("menu").addEventListener('scroll',function(e){
       if(document.getElementById("menu").scrollTop < 110){
         document.getElementById("backToTop").style.visibility = "hidden";
+       // document.getElementById("busVisual").style.
       }else{
         document.getElementById("backToTop").style.visibility = "visible";
       }
@@ -722,12 +723,12 @@ function initMap() {
     clon.content.getElementById("details").setAttribute("onClick","showDetails("+idx+")");
     clon.content.getElementById("estimate").innerHTML = estimate;
     
-    clon.content.getElementById("busVisual").style.transition = "all " + totalTime +"s";
+    //clon.content.getElementById("busVisual").style.transition = "all " + totalTime +"s";
     
     
     //var numTabs = document.getElementsByTagName("span").getElementsByClassName("tab").length;
     //console.log(numTabs)
-    clon.content.getElementById("busVisual").style.top =  "px";
+    clon.content.getElementById("busVisual").style.bottom =  "12px";
     console.log(clon.content.getElementById("busVisual").style.top);
 
     clon.content.getElementById("steps").innerHTML = "";
