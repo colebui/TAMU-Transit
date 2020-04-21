@@ -213,11 +213,18 @@ label{
 
 
 
-input.larger{
+.larger{
     width: 22px;
     height: 22px;
     position: relative;
     left: 12px;
+    color:red;
+    background:blue;
+    
+}
+
+input[type=checkbox]:checked:after{
+    background:blue;
 }
 
 input {
@@ -418,19 +425,20 @@ input {
 }
 
 #busIcon{
-    position: absolute;
+    position: relative;
     background: white;
     z-index: 96;
     font-size: 13px;
-    top: 26px;
-    left: 3px;
+    top: -13px;
+    left: 2px;
 }
 
 #busVisualMarker{
-    position: absolute;
+    position: relative;
     z-index: 95;
     font-size: 56px;
     transform: rotate(245deg);
+    left: -16px;
 }
 
 #busVisual{
@@ -465,4 +473,27 @@ input {
     transition: left 1s;
     
     visibility: hidden;
+}
+
+input[type=checkbox] {
+    background:green;
+}
+
+#loading{
+    position: absolute;
+    justify-content: center;
+    top: 38px;
+    width: 100px;
+    height: 100px;
+    z-index: 105;
+    transition: left 1s;
+}
+.white{
+    background-color: white;
+    position: absolute;
+    height: 100px;
+    width: 408px;
+    top: -38px;
+    z-index: 105;
+    transition: left .5s;
 }
