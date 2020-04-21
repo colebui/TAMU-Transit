@@ -17,10 +17,10 @@
     %link{:href => "favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
 
 
-  %body{:onload => "loadingScreen()"}
+  %body
     #loading.loading
       .white
-      %img{:height => "408", :src => "TAMU-Logo.jpg", :width => "auto"}/
+      %img{:height => "408", :src => "TAMU-Logo.jpg", :width => "auto", :onload => "loadingScreen()"}/
 
     %template
       %span#tab.tab
@@ -45,7 +45,7 @@
       
       .options
         %nav#nav{:style =>""}
-          %button#bus.btn.btn-success{:onclick => "busButton()"}
+          %button#bus.btn.btn-success.active{:onclick => "busButton()"}
             %i.fa.fa-bus.fa-lg
           %button#bike.btn.btn-success{:onclick => "bikeButton()"}
             %i.fa.fa-bicycle.fa-lg
@@ -84,3 +84,14 @@
       %i.fa.fa-caret-left{:style => "font-size:24px"}
     
     #map
+:javascript
+  // Add active class to the current button (highlight it)
+  var header = document.getElementById("nav");
+  var btns = header.getElementsByClassName("btn");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+    });
+  }
