@@ -169,3 +169,73 @@ var elem = document.getElementById("loading");
 
 
 
+
+function closePhoneTab(){
+    document.getElementsByClassName("phoneNumber")[0].style.visibility = "hidden";
+}
+
+var darkModeIO = false;
+function darkMode(){
+    
+    var b = document.getElementById("darkMode"); // button
+    var menuBtn = document.getElementById("menubtn");
+    var destBar = document.getElementById("currentLocation");
+    var output = document.getElementById("output");
+    var search1 = document.getElementById("search1");
+    var search2 = document.getElementById("search2");
+    var buttons = [b,menuBtn];
+    var divs = [output,destBar,search1,search2];
+    if(darkModeIO==false){//turning on
+        /*
+        .style.color = "#d59563";
+        .style.backgroundColor = "#242f3e";
+        
+        #1f1f1f //buttons backgroun color
+        
+        */
+        var btnBackGround = "#1f1f1f";
+        var backGround = "#242f3e";
+        var colr = "#d59563";
+        
+        for(var i =0;i<buttons.length;i++){
+            buttons[i].style.color = colr;
+            buttons[i].style.backgroundColor = btnBackGround;
+        }
+        
+        for(var i =0;i<divs.length;i++){
+            divs[i].style.color = colr;
+            divs[i].style.backgroundColor = backGround;
+        }
+        
+        
+        
+        
+        
+        darkModeIO = !darkModeIO;
+        
+       
+        
+        
+    }else{//turning off
+    
+        /*
+            .style.color = "rgb(122,0,0)";
+            .style.backgroundColor = "rgb(235,232,224)";
+        */
+        var btnBackGround = "rgb(235,232,224)";
+        var backGround = "white";
+        var colr = "rgb(122,0,0)";
+        
+        for(var i =0;i<buttons.length;i++){
+            buttons[i].style.color = colr;
+            buttons[i].style.backgroundColor = btnBackGround;
+        }
+        
+        for(var i =0;i<divs.length;i++){
+            divs[i].style.color = colr;
+            divs[i].style.backgroundColor = backGround;
+        }
+
+        darkModeIO = !darkModeIO;
+    }
+}

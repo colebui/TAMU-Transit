@@ -15,32 +15,6 @@ var currMode ='WALKING';
 /*global map*/
 /*global */
 /*global */
-var getParams = function (url) {
-	var params = {};
-	var parser = document.createElement('a');
-	parser.href = url;
-	var query = parser.search.substring(1);
-	var vars = query.split('&');
-	for (var i = 0; i < vars.length; i++) {
-		var pair = vars[i].split('=');
-		params[pair[0]] = decodeURIComponent(pair[1]);
-	}
-	return params;
-};
-var startURL = "",endURL="";
-var params = getParams(window.location.href);
-
-
-if(params.start && params.end){
-  startURL = params.start;
-  endURL = params.start;
-}
-
-console.log(startURL);
-
-
-
-
 
 
 
@@ -51,13 +25,13 @@ function initMap() {
       center: {lat: 30.618811, lng: -96.336424},
       zoom: 13
     });
-
+    
     infoWindow = new google.maps.InfoWindow;
     
   
     new AutocompleteDirectionsHandler(map);
     if(startURL.localeCompare(endURL) != 0){
-      console.log("worked");
+      //console.log("worked");
       bikeButton();
     }
   }
@@ -130,6 +104,8 @@ function initMap() {
     
     this.setupSwapListener('flip');
     
+    //this.setupDarkMode('darkMode');
+    
     
   
     this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
@@ -160,12 +136,110 @@ function initMap() {
         });
   };
   
+  AutocompleteDirectionsHandler.prototype.setupDarkMode = function(id) {
+        var button = document.getElementById(id);
+        var me = this;
+        
+        button.addEventListener('click', function() {
+          console.log("darkmode");
+          console.log(me.directionsRenderer.map);
+          me.mode = currMode;
+          
+          if(darkModeIO){
+            me.directionsRenderer.map.styles = [
+            {elementType: 'geometry', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.stroke', stylers: [{color: '#242f3e'}]},
+            {elementType: 'labels.text.fill', stylers: [{color: '#746855'}]},
+            {
+              featureType: 'administrative.locality',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'geometry',
+              stylers: [{color: '#263c3f'}]
+            },
+            {
+              featureType: 'poi.park',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#6b9a76'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry',
+              stylers: [{color: '#38414e'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#212a37'}]
+            },
+            {
+              featureType: 'road',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#9ca5b3'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry',
+              stylers: [{color: '#746855'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'geometry.stroke',
+              stylers: [{color: '#1f2835'}]
+            },
+            {
+              featureType: 'road.highway',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#f3d19c'}]
+            },
+            {
+              featureType: 'transit',
+              elementType: 'geometry',
+              stylers: [{color: '#2f3948'}]
+            },
+            {
+              featureType: 'transit.station',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#d59563'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'geometry',
+              stylers: [{color: '#17263c'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.fill',
+              stylers: [{color: '#515c6d'}]
+            },
+            {
+              featureType: 'water',
+              elementType: 'labels.text.stroke',
+              stylers: [{color: '#17263c'}]
+            }
+          ];}
+          else{
+            me.directionsRenderer.map.styles = [];
+          }
+          me.route();
+        });
+  };
+  
   // Sets a listener on a radio button to change the filter type on Places
   // Autocomplete.
   AutocompleteDirectionsHandler.prototype.setupClickListener = function(
       id, mode) {
     var radioButton = document.getElementById(id);
     var me = this;
+    
       currMode = mode;
   
     radioButton.addEventListener('click', function() {
@@ -418,7 +492,7 @@ function initMap() {
             App.directionsDisplayStart.setDirections(result);
             var leg = result.routes[ 0 ].legs[ 0 ];
             //console.log("1");
-            console.log(result);
+
             displayTextDirections(leg);
             makeMarker( leg.start_location, circle );
             makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
@@ -451,7 +525,7 @@ function initMap() {
               App.directionsDisplay1.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("2");
-              console.log(result);
+                 
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -470,7 +544,7 @@ function initMap() {
               App.directionsDisplay2.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("3");
-              console.log(result);
+                 
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -489,7 +563,7 @@ function initMap() {
               App.directionsDisplay3.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("4");
-              console.log(result);
+                 
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -509,7 +583,7 @@ function initMap() {
               
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("5");
-              console.log(result);
+                 
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -528,7 +602,7 @@ function initMap() {
               App.directionsDisplay5.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("6");
-              console.log(result);
+                 
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -547,7 +621,7 @@ function initMap() {
               App.directionsDisplay6.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("7");
-              console.log(result);
+                 
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -566,7 +640,7 @@ function initMap() {
               App.directionsDisplay7.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("8");
-              console.log(result);
+                 
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -585,7 +659,7 @@ function initMap() {
               App.directionsDisplay8.setDirections(result);
               var leg = result.routes[ 0 ].legs[ 0 ];
               //console.log("9");
-              console.log(result);
+                 
               displayTextDirections(leg);
               makeMarker( leg.end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG' );
               App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
@@ -605,7 +679,7 @@ function initMap() {
           App.map.fitBounds(App.bounds.union(result.routes[0].bounds));
           var leg = result.routes[ 0 ].legs[ 0 ];
           //console.log("10");
-          console.log(result);
+             
           displayTextDirections(leg);
           makeMarker( leg.end_location, marker );
         }
@@ -679,7 +753,7 @@ function initMap() {
         
           var dur = orderedArr[i].duration.text.split(" ");
           
-          console.log("adding "+ dur[0]);
+          //console.log("adding "+ dur[0]);
           min+=parseInt(dur[0]) 
           if(min >= 60){
             hr+= Math.floor(min/60);
@@ -694,7 +768,7 @@ function initMap() {
     
     
     var totalTime = endTimeInSec-currTimeInSec
-    console.log(endTimeInSec-currTimeInSec);//time required to make trip
+    //console.log(endTimeInSec-currTimeInSec);//time required to make trip
     
         
     addDirectionLeg(
@@ -729,7 +803,7 @@ function initMap() {
     //var numTabs = document.getElementsByTagName("span").getElementsByClassName("tab").length;
     //console.log(numTabs)
     clon.content.getElementById("busVisual").style.bottom =  "12px";
-    console.log(clon.content.getElementById("busVisual").style.top);
+    //console.log(clon.content.getElementById("busVisual").style.top);
 
     clon.content.getElementById("steps").innerHTML = "";
     for(var i =0;i<steps.length;i++){
@@ -760,7 +834,7 @@ function initMap() {
   }
   
   function displayRoutes(routes){
-    console.log("worked");
+    //console.log("worked");
     var size = 0;
     var paths = [];
     
@@ -805,8 +879,8 @@ function initMap() {
       size = 10;
     }
     
-    console.log(size);
-    console.log(paths);
+    //console.log(size);
+    //console.log(paths);
     
     
     
