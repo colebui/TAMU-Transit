@@ -12,12 +12,19 @@
     %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
     %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css", :rel => "stylesheet"}/
-
+    %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"}
+  
     %div{:onload => "busButton()"}
     %link{:href => "favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
 
 
   %body
+    #map
+    .phoneNumber
+      %input.enterPhoneNumber{:placeholder => "Enter Phone Number"}/
+      %button.sendText Send Text
+      %button.exit{:onclick => "closePhoneTab();"} X
+
     #loading.loading
       .white
       %img{:height => "408", :src => "TAMU-Logo.jpg", :width => "auto", :onload => "loadingScreen()"}/
@@ -39,6 +46,9 @@
         %i#busIcon.fa.fa-bus.fa-lg
         %i#busVisualMarker.fa.fa-map-marker
     #menu.menu
+      %button#darkMode.darkMode{:onclick => "darkMode()"}
+        %i.fa.fa-moon-o{:style => "font-size:24px"}
+      
       
       %button#backToTop.backToTop{:onclick => "backToTop()"}
         %i.fa.fa-caret-up{:style => "font-size:24px"}  
@@ -83,7 +93,7 @@
     %button#menubtn.menubtn{:onclick => "closeMenu()"}
       %i.fa.fa-caret-left{:style => "font-size:24px"}
     
-    #map
+    
 :javascript
   // Add active class to the current button (highlight it)
   var header = document.getElementById("nav");
