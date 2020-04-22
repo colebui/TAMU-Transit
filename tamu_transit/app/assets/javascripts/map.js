@@ -130,43 +130,118 @@ function initMap() {
     
     
     if (this.travelMode == 'TRANSIT'){
-      var url = "https://aggiemapstest.appspot.com/routes/"+startLat+"/"+startLng+"/"+endLat+"/"+endLng+"/weekdays";
-      arr = [];
-      $.ajax({
-        method: "GET",
-        cache: false,
-        url: url,
-        success: function(data) {
-          var path1 = data.path1;
-          var path2 = data.path2;
-          var path3 = data.path3;
-
-          var coords1 = data.coords1;
-          var coords2 = data.coords2;
-          var coords3 = data.coords3;
-          
-          mapit(startLat, startLng, endLat, endLng, coords1, path1);
-        }
+      var route1_waypts = [];
+      var route5_waypts = [];
+      route1_waypts.push({
+        location: {lat:30.618900, lng:-96.342874},
+        stopover: false
       });
+      route1_waypts.push({
+        location: {lat:30.611624,lng:-96.350726},
+        stopover: false
+      });
+      route1_waypts.push({
+        location: {lat:30.611669, lng:-96.347243},
+        stopover: false
+      });
+      route1_waypts.push({
+        location: {lat:30.606778, lng:-96.344749},
+        stopover: false
+      });
+      route1_waypts.push({
+        location: {lat:30.604763, lng:-96.345291},
+        stopover: false
+      });
+      route1_waypts.push({
+        location: {lat:30.605534, lng:-96.347500},
+        stopover: false
+      });
+      route5_waypts.push({
+        location: {lat:30.614096, lng:-96.341778},
+        stopover: false
+      });
+      route5_waypts.push({
+        location: {lat:30.609960, lng:-96.346758},
+        stopover: false
+      });
+      route5_waypts.push({
+        location: {lat:30.607105, lng:-96.347930},
+        stopover: false
+      });
+
+      var bus_route = 5;
+      //figure out the route to take
+      if(bus_route == 1){
+        this.directionsService.route(
+          {
+            origin: route1_waypts[0],
+            destination: route1_waypts[5],
+            waypoints: route1_waypts,
+            optimizeWaypoints: false,
+            travelMode: 'Driving'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              me.directionsRenderer.setDirections(response);
+              displayTextDirections(me.directionsRenderer.directions.routes[0].legs[0]);
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+      }
+      else{ //bus route 5
+
+      }
+
+
+
     }
     else if (this.travelMode == 'ACCESIBLE'){
-      var url = "https://aggiemapstest.appspot.com/routes/"+startLat+"/"+startLng+"/"+endLat+"/"+endLng+"/weekdays";
+      var url = "https://aggiemapsapi.appspot.com/routes?startLat="+startLat+"&startLng="+startLng+"&endLat="+endLat+"&endLng="+endLng;
       $.ajax({
         method: "GET",
         cache: false,
         url: url,
         success: function(data) {
-          var path1 = data.path1;
-          var path2 = data.path2;
-          var path3 = data.path3;
-
-          var coords1 = data.coords1;
-          var coords2 = data.coords2;
-          var coords3 = data.coords3;
+          var routes = [];
+          routes.push(data.route1);
+          routes.push(data.route2);
+          routes.push(data.route3);
           var paths = [];
-          paths.push(path1);
-          paths.push(path2);
-          paths.push(path3);
+          paths.push(data.path1);
+          paths.push(data.path2);
+          paths.push(data.path3);
+          var new_paths = [];
+          //gives paths
+          for(var i = 0; i<3; i++){
+            var new_path = [];
+            for(var j = 0; j < routes[i].length; j++){
+              var stop = [routes[i][j][0]];
+              new_path.push(paths[i][j]);
+              new_path.push(stop);
+            }
+            new_path.push(paths[i][routes[i].length]);
+            new_paths.push(new_path);
+          }
+          // get coords
+          var new_coords = [];
+          for(var i = 0; i < 3 ; i++){
+            var new_coord = [];
+            for(var j = 0; j < paths[i].length; j++){
+              var coord_url = "https://aggiemapsapi.appspot.com/coordinates?stop=" + paths[i][j];
+              $.ajax({
+                method: "GET",
+                cache: false,
+                url: coord_url,
+                success: function(data) {
+                  new_coord.push(data[paths[i][j]]);
+                }
+              });
+              new_coords.push(new_coord);
+            }
+          }
+          
           var bestPath = [0,0,0];
           for(var i = 0; i<3; i++){
             for(var j = 1; j<paths[i].length; j+=2){
