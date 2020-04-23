@@ -1,15 +1,21 @@
 #nav {
     display: flex; 
     padding-top: 20px;
-    padding-bottom: 1px;
+    padding-bottom: 5px;
     justify-content: space-evenly;
+    position: fixed;
+    top: -5px;
+    width: 403px;
+    background-color: rgb(122,0,0);
+    z-index: 99;
+    width: 408px;
 }
 
 
 #map {
     position: absolute;
     top: 0px;
-    left: 0px;
+    left: 408px;
     bottom: 0px;
     right: 0;
     height: 100%;
@@ -17,18 +23,26 @@
 
     transition: left 1s;
     transition: right 1s;
-    /* transition: width 1s; */
+     transition: width 1s; 
+}
+
+.menu::-webkit-scrollbar {
+    display: none;
 }
 
 .menu {
     position: absolute;
     width: 408px;
     height: 100%;
-    background: linear-gradient(to bottom, rgb(122,0,0) 0px,rgb(122,0,0) 295px, 200px,white 200px,white 100%);
+    /*background: linear-gradient(to bottom, rgb(122,0,0) 0px,rgb(122,0,0) 295px, 200px,white 200px,white 100%);*/
     left: 0px;
     top: 0;
     transition: left 1s;
-    z-index: 99;
+    z-index: 95;
+    scroll-behavior: smooth;
+    overflow: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
 
     /*border: 2px solid black;*/
 }
@@ -49,10 +63,12 @@
     top: 5px;
     left: 385px;
     transition: left 1s;
+    transition: right 1s;
     background-color: rgb(235,232,224) !important;
     border-color:rgb(235,232,224) !important;
     z-index: 99;
     outline:0 !important;
+    
 }
 
 
@@ -64,15 +80,19 @@
   border-radius: 22px  !important;
   width: 45px;
   height: 45px;
-  text-align: center !important
+  text-align: center !important;
+  transition: left 1s;
+    transition: right 1s;
 }
 
-.btn-success:focus {
+.active, .btn-success:focus {
   background-color: rgb(235,232,224) !important;
   border-color:rgb(235,232,224) !important;
   color:  rgb(122,0,0)  !important;
   text-align: center !important;
   outline:0 !important;
+  transition: left 1s;
+    transition: right 1s;
 }
 
 .currentLocation {
@@ -107,17 +127,23 @@
     width: 100%;
     text-align:left;
     overflow: auto;
+    overflow-x: hidden;
+    height: 295px;
+    overflow-y: hidden;
+    background: rgb(122,0,0);
     /* border: 2px solid yellow; */
 }
 
+
+
 .directions {
-    width: 373px;
-    height: 499px;
+    width: auto;
+    height: 424px;
     background-color: white;
-    border: 2px solid black;
     position: relative;
-    left: 15px;
-    overflow: auto;
+    display: block;
+    text-align: center;
+    
 }
 
 #birthdaytime{
@@ -132,6 +158,8 @@
     box-sizing: border-box;
     border: 2px;
     border-color: white;
+    position: relative;
+    top: 191px;
 }
 
 label{
@@ -142,10 +170,6 @@ label{
     font-size: 23px;
     
     top: 3px;
-}
-
-.directions{
-    text-align: center;
 }
 
 .Directions{
@@ -189,11 +213,18 @@ label{
 
 
 
-input.larger{
+.larger{
     width: 22px;
     height: 22px;
     position: relative;
     left: 12px;
+    color:red;
+    background:blue;
+    
+}
+
+input[type=checkbox]:checked:after{
+    background:blue;
 }
 
 input {
@@ -203,13 +234,13 @@ input {
 
 #search1 {
     visibility: visible; 
-    top: 74px;
+    top: 8px;
     padding-bottom: 23px;
 }
 
 #search2{
     visibility: hidden; 
-    top: 134px;
+    top: 68px;
     padding-bottom: 23px;
 }
 
@@ -226,28 +257,360 @@ input {
     left: 25px;
     padding-top:6px;
     margin: 55px 0px 10px 0px;
+    top: 144px;
 }
 
 
 
 #container {
     margin: auto;
-    height: 130px;
+    height: 122px;
+    position: fixed;
+    top: 64px;
+    width: 408px;
+    z-index: 99;
+    background: rgb(122,0,0);
     /*background-color: #ffcc33;*/
 
 }
 #first {
     width: 87%;
     float: left;
-    height: 130px;
+    height: 122px;
     /*background-color: blue;*/
 }
 #second {
-    width:13%;
     float: right;
     height: 130px;
     text-align: center;
     padding-top: 50px;
-    
+    position: absolute;
+    left: 357px;
+    top: 65px;
+    position: fixed;
+    left: 365px;
+    top: 77px;
+    z-index: 99;
+    transition: left 1s; 
     /*background-color: green;*/
+}
+
+.time{
+    position: absolute;
+    font-weight: 500;
+    left: 19px;
+    top: 12px;
+    font-size: 13px;
+    
+}
+
+.tab{
+    width: 100%;
+    height: 140px;
+    font-family: Roboto, Arial, sans-serif;;
+    font-size: 13px;
+    position: relative;
+    color: #333333;
+    left: 0px;
+    top: 0px;
+    display: block;
+    transition: height 1s;
+    outline:none;
+}
+
+.dot{
+    height: 13px;
+    width: 13px;
+    background-color: white;
+    border-radius: 50%;
+    display: inline-block;
+    border: 2px solid black;
+    left: 91px;
+    top: 27px;
+    position: absolute;
+}
+
+.start{
+    position: absolute;
+    font-size: 16px;
+    left: 120px;
+    top: 10px;
+    border-bottom: 1px solid #d4d4d4;
+}
+
+.visualLine{
+    position: absolute;
+    border-left: 6px dotted #003C71;
+    height: 121px;
+    left: 95px;
+    top: 48px;
+    transition: height 1s;
+}
+
+.city{
+    font-size: 13px;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.54);
+    position: absolute;
+    left: 121px;
+    top: 30px;
+}
+
+.mode{
+    font-size: 16px;
+    position: relative;
+    top: 77px;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.87);
+    padding-bottom: 36px;
+    padding-right: 232px;
+    border-bottom: 1px solid #d4d4d4;
+    margin-bottom: 0px;
+    margin-top: 16px;
+}
+
+.details:focus {
+  outline: none;
+}
+
+.details{
+    position: absolute;
+    padding: 0;
+    border: none;
+    background: none; 
+    left: 121px;
+    width: auto; 
+    height: 71px; 
+    padding-bottom: 0px;
+    
+}
+.estimate{
+    position: absolute;
+    color: black;
+    top: 112px;
+    left: 20px;
+}
+.steps{
+    position: relative;
+    height: 0px;
+    width: 264px;
+    left: 120px;
+    top: 146px;
+    text-align: left;
+    visibility: visible;
+    overflow: hidden;
+    display: block;
+    transition: height 1s;
+}
+
+.step{
+    padding-top: 11px;
+    padding-bottom: 11px;
+    border-bottom: 1px solid #d4d4d4;
+    
+}
+
+.stop {
+    position: absolute;
+    border-radius: 9px;
+    background: #7a0000;
+    padding: 7px;
+    width: -1px;
+    height: 36px;
+    top: 36px;
+    color: white;
+    left: 79px;
+    font-size: 20px;
+    font-weight: 1000;
+}
+
+#busIcon{
+    position: relative;
+    background: white;
+    z-index: 96;
+    font-size: 13px;
+    top: -13px;
+    left: 2px;
+}
+
+#busVisualMarker{
+    position: relative;
+    z-index: 95;
+    font-size: 56px;
+    transform: rotate(245deg);
+    left: -16px;
+}
+
+#busVisual{
+    position: absolute;
+    top: 16px;
+    left: 61px;
+}
+
+#backToTop{
+    
+    border-color: rgb(235,232,224) !important;
+    color: rgb(122,0,0) !important;
+    border: 0px;
+    padding: 0px;
+    position: fixed;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 2px;
+    height: 36px;
+    width: 36px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    overflow: hidden;
+    transition: left 1s;
+    transition: right 1s;
+    background-color: rgb(235,232,224) !important;
+    border-color: rgb(235,232,224) !important;
+    z-index: 95;
+    outline: 0 !important;
+    left: 359px;
+    bottom: 11px;
+    z-index: 99;
+    transition: left 1s;
+    
+    visibility: hidden;
+}
+
+input[type=checkbox] {
+    background:green;
+}
+
+#loading{
+    position: absolute;
+    justify-content: center;
+    top: 38px;
+    width: 100px;
+    height: 100px;
+    z-index: 105;
+    transition: left 1s;
+}
+.white{
+    background-color: white;
+    position: absolute;
+    height: 100px;
+    width: 408px;
+    top: -38px;
+    z-index: 105;
+    transition: left .5s;
+}
+
+
+
+
+#myAnimation {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  background-color: red;
+}
+
+
+.phoneNumber{
+    position: absolute;
+    width:100%;
+    height: 100%;
+    background-color: rgb(36, 47, 62);
+    z-index: 1000;
+    left: 0px;
+    top: 0;
+    visibility: hidden;
+    
+}
+
+.enterPhoneNumber{
+    width: 75%;
+    padding: 12px 20px;
+    margin: 8px 4%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    box-sizing: border-box;
+    border: 2px;
+    border-color: white;
+    left: 8%;
+    top: 10%;
+    position: absolute;
+}
+
+.sendText{
+    border: 0px;
+    padding: 12px 20px;
+    margin: 8px 4%;
+    position: fixed;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 2px;
+    height: 36px;
+    width: 36px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    overflow: hidden;
+
+    transition: right 1s;
+    background-color: rgb(235,232,224);
+    z-index: 95;
+    outline: 0;
+    color: rgb(213, 149, 99);
+    background-color: rgb(31, 31, 31);
+
+    left:8%;
+    top: 18%;
+    width: 75%;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 650;
+}
+
+.exit{
+    border: 0px;
+    padding: 0px;
+    position: fixed;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 2px;
+    height: 36px;
+    width: 36px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    overflow: hidden;
+
+    transition: right 1s;
+    background-color: rgb(235,232,224);
+    z-index: 95;
+    outline: 0;
+    color: rgb(213, 149, 99);
+    background-color: rgb(31, 31, 31);
+
+    left: 3%;
+    top: 2%;
+    width: 10%;
+    font-size: 16px;
+    text-align: center;
+    font-weight: 650;
+}
+
+#darkMode{
+    color: rgb(122,0,0);
+    border: 0px;
+    padding: 0px;
+    position: fixed;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 2px;
+    height: 36px;
+    width: 36px;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+    overflow: hidden;
+    transition: left 1s;
+    transition: right 1s;
+    background-color: rgb(235,232,224);
+    border-color: rgb(235,232,224)  ;
+    z-index: 95;
+    outline: 0  ;
+    left: 16px;
+    bottom: 11px;
 }

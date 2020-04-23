@@ -12,17 +12,50 @@
     %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
     %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css", :rel => "stylesheet"}/
     %link{:href => "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css", :rel => "stylesheet"}/
-
+    %script{:src => "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"}
+  
     %div{:onload => "busButton()"}
+    %link{:href => "favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}/
+
 
   %body
-    #menu.menu
-      
-        
+    #map
+    .phoneNumber
+      %input.enterPhoneNumber{:placeholder => "Enter Phone Number"}/
+      %button.sendText Send Text
+      %button.exit{:onclick => "closePhoneTab();"} X
 
+    #loading.loading
+      .white
+      %img{:height => "408", :src => "TAMU-Logo.jpg", :width => "auto", :onload => "loadingScreen()"}/
+
+    %template
+      %span#tab.tab
+        %h2#time.time 12:26 PM
+        %span#dot.dot
+        %h1#start.start
+          Golden Gate Bridge
+        #visualLine.visualLine{:style => "border-left: 6px dotted #003C71;"}
+        %h2#city.city San Francisco, CA
+        %button#details.details{:onclick => "showDetails(0);"}
+          %h3#mode.mode Walk
+          %i.fa.fa-caret-down{:style => "position:relative;font-size:24px;left:-126px;top:22px;margin-top: 16px;"}
+          %p#estimate.estimate{:for => ""} About 26 min, 1.3 mi
+        #steps.steps
+      #busVisual.busVisual
+        %i#busIcon.fa.fa-bus.fa-lg
+        %i#busVisualMarker.fa.fa-map-marker
+    #menu.menu
+      %button#darkMode.darkMode{:onclick => "darkMode()"}
+        %i.fa.fa-moon-o{:style => "font-size:24px"}
+      
+      
+      %button#backToTop.backToTop{:onclick => "backToTop()"}
+        %i.fa.fa-caret-up{:style => "font-size:24px"}  
+      
       .options
         %nav#nav{:style =>""}
-          %button#bus.btn.btn-success{:onclick => "busButton()"}
+          %button#bus.btn.btn-success.active{:onclick => "busButton()"}
             %i.fa.fa-bus.fa-lg
           %button#bike.btn.btn-success{:onclick => "bikeButton()"}
             %i.fa.fa-bicycle.fa-lg
@@ -33,25 +66,42 @@
           %button#wheelchair.btn.btn-success{:onclick => "wheelchairButton()"}
             %i.fa.fa-wheelchair-alt.fa-lg
 
-      #container
-        #first
-          %input#currentLocation.currentLocation{:placeholder => "Enter an origin location", :type => "text", :onclick => "firstbox()"}/
-          %input#destination.destination{:placeholder => "Enter a destination location", :type => "text", :onclick => "secondbox()"}/
-          %button#search1.Directions{:onclick => "Directions()"}
-            %i.material-icons#directions directions
-          %button#search2.Directions2{:onclick => "Directions()"}
-            %i.material-icons#directions directions
+        #container
+          #first
+            %input#currentLocation.currentLocation{:placeholder => "Enter an origin location", :type => "text", :onclick => "firstbox()"}/
+            %input#destination.destination{:placeholder => "Enter a destination location", :type => "text", :onclick => "secondbox()"}/
+            %button#search1.Directions{:onclick => "Directions()"}
+              %i.material-icons#directions directions
+            %button#search2.Directions2{:onclick => "Directions()"}
+              %i.material-icons#directions directions
         #second
-          %button.flip{:onclick => "Flip()"}
+          %button#flip.flip{:onclick => "Flip()"}
             %img{:height => "30", :style => "cursor: pointer;" , :src => "http://dw4ygg83x3mfl.cloudfront.net/swap.png", :width => "auto"}/
         
         %input#birthdaytime{:name => "birthdaytime", :type => "datetime-local"}/
 
-      #VeoOption.checkbox
-        %input#VeoRide.larger{:name => "VeoRide", :type => "checkbox", :value => "Bike", :width => "100px"}/
-        %label{:for => "VeoRide"}
-          %img{:height => "30", :src => "http://dw4ygg83x3mfl.cloudfront.net/VeoRide_Logo.png", :width => "auto"}/
+        #VeoOption.checkbox
+          %input#VeoRide.larger{:name => "VeoRide", :type => "checkbox", :value => "Bike", :width => "100px"}/
+          %label{:for => "VeoRide"}
+            %img{:height => "30", :src => "http://dw4ygg83x3mfl.cloudfront.net/VeoRide_Logo.png", :width => "auto"}/
       #output.directions
+      
+      
+
+      
+
     %button#menubtn.menubtn{:onclick => "closeMenu()"}
       %i.fa.fa-caret-left{:style => "font-size:24px"}
-    #map
+    
+    
+:javascript
+  // Add active class to the current button (highlight it)
+  var header = document.getElementById("nav");
+  var btns = header.getElementsByClassName("btn");
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].addEventListener("click", function() {
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+    });
+  }

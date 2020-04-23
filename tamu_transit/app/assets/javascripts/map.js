@@ -1114,6 +1114,7 @@ function initMap() {
     }
     var endTimeInSec = sec+ min*60 + hr*3600;
     
+    //console.log(clon);
     
     var totalTime = endTimeInSec-currTimeInSec
     //console.log(endTimeInSec-currTimeInSec);//time required to make trip
