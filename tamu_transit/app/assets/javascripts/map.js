@@ -1134,7 +1134,8 @@ function initMap() {
       orderedArr[i].steps[0].travel_mode,
       "About " + orderedArr[i].duration.text + ", " +orderedArr[i].distance.text,
       orderedArr[i].steps,
-      totalTime
+      totalTime,
+      "00"
       );
     }
     
@@ -1144,7 +1145,7 @@ function initMap() {
     
   }
   
-  function addDirectionLeg(time,startLocation,city,idx,mode,estimate,steps,totalTime){
+  function addDirectionLeg(time,startLocation,city,idx,mode,estimate,steps,totalTime,busNum){
     var clon = document.getElementsByTagName("template")[0];
     clon.content.getElementById("time").innerHTML = time;
     clon.content.getElementById("start").innerHTML = startLocation;
@@ -1173,11 +1174,11 @@ function initMap() {
       clon.content.getElementById("visualLine").style.top = "47px";
       clon.content.getElementById("visualLine").style.height = "121px";
     }else{
-      clon.content.getElementById("mode").innerHTML = "Bus "+ busNumber;                                                     //bus number here
+      clon.content.getElementById("mode").innerHTML = "Bus "+ busNum;                                                     //bus number here
      
       clon.content.getElementById("visualLine").style.borderLeft = "6px solid #003C71";
       clon.content.getElementById("dot").setAttribute('class', 'stop');
-      clon.content.getElementById("dot").innerHTML = busNumber;                                                         ///enter bus number here
+      clon.content.getElementById("dot").innerHTML = busNum;                                                         ///enter bus number here
       clon.content.getElementById("visualLine").style.top = "75px";
       clon.content.getElementById("visualLine").style.height = "89px";
     }
@@ -1230,10 +1231,18 @@ function initMap() {
       if (bus5Times[i]-currTimeInSec+bus5walkTime > 0)
         arrivalToBus5 = Math.min(arrivalToBus5, bus5Times[i]-currTimeInSec-bus5walkTime);
     }
-    if (arrivalToBus1 > arrivalToBus5)
+    if (arrivalToBus1 > arrivalToBus5){
       bestRoute = "5";
-    else
+      document.getElementById("output").innerHTML = "";
+      var step = [instructions = ["Get on Bus 5"]];
+      addDirectionLeg("1:21 PM","Beutel","college station",0,"TRANSIT","About 10 mins",step,1000,"05");
+    }
+    else{
       bestRoute = "1";
+      document.getElementById("output").innerHTML = "";
+      var step = [instructions = ["Get on Bus 1"]];
+      addDirectionLeg("1:21 PM","Beutel","college station",0,"TRANSIT","Abuut 10 mins",step,1000,"01");
+    }
     console.log("best route number: " + bestRoute);
     busNumber = bestRoute;
     return bestRoute;

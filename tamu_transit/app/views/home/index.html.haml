@@ -19,7 +19,7 @@
 
 
   %body
-    #map
+    #map.map
     .phoneNumber
       %input.enterPhoneNumber{:placeholder => "Enter Phone Number"}/
       %button.sendText Send Text
@@ -45,6 +45,22 @@
       #busVisual.busVisual
         %i#busIcon.fa.fa-bus.fa-lg
         %i#busVisualMarker.fa.fa-map-marker
+        
+      %template
+        %button#route.route
+        %i#transit.fa.fa-bus
+        .duration 56 min
+        .routetime 9:10 PM - 10:06 PM
+        .summaryvisual
+        .destination
+        %i#routeAction.fa.fa-blind →
+        %i#routeAction.fa.fa-bus
+        %span#busnumber.stop 32
+        %i#routeAction →
+        %i#routeAction.fa.fa-blind
+        #startplace 9:10 PM from 124 Joe Routt blvd
+
+        
     #menu.menu
       %button#darkMode.darkMode{:onclick => "darkMode()"}
         %i.fa.fa-moon-o{:style => "font-size:24px"}
@@ -85,7 +101,7 @@
           %label{:for => "VeoRide"}
             %img{:height => "30", :src => "http://dw4ygg83x3mfl.cloudfront.net/VeoRide_Logo.png", :width => "auto"}/
       #output.directions
-      
+        
       
 
       
