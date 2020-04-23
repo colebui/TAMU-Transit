@@ -4,7 +4,7 @@ var endLat;
 var endLng;
 var arr=[];
 var geo;
-
+var busNumber;
 var route1 = {"coords1":[[30.615178,-96.337378],[30.605585,-96.347413]],"coords2":[[30.613928,-96.339018],[30.614133,-96.343276],[30.605585,-96.347413]],"coords3":[[30.615178,-96.337378],[30.604797,-96.345232]],"coords4":[[30.613928,-96.339018],[30.595977,-96.339922],[30.599502,-96.341795],[30.607069,-96.344685],[30.607005,-96.345],[30.604797,-96.345232]],"path1":["Commons",[1],"Reed Arena - IB"],"path2":["Trigon",[-1],"MSC",[5],"Reed Arena - IB"],"path3":["Commons",[1],"Lot 100G"],"path4":["Trigon",[36],"South East - Park West 2",[-1],"North West - Park West - OB",[8],"Rec Center - IB",[-1],"Rec Center - OB",[1],"Lot 100G"]};
 displayRoutes(route1);
 var currMode ='WALKING';
@@ -16,24 +16,97 @@ var currMode ='WALKING';
 /*global */
 /*global */
 
-
-
-
+var walkingPath;
+var busPath = {
+  strokeColor: '#06427e',
+  strokeWeight: 7.5
+};
+var startMark1;
+var startMark2;
+var endMark1;
+var endMark2;
+var circle;
+var directionsDisplayStart;
+var directionsDisplayEnd;
+var directionsDisplay1;
+var directionsDisplay2;
+var directionsDisplay3;
+var directionsDisplay4;
+var directionsDisplay5;
 function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       mapTypeControl: false,
       center: {lat: 30.618811, lng: -96.336424},
       zoom: 13
     });
-    
+    walkingPath = {
+      strokeOpacity: 0,
+      icons: [{
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: '#4285F4',
+          fillOpacity: 1,
+          scale: 5,
+        },
+        offset: '5',
+        repeat: '22px'
+      }]
+    };
+    circle = {
+     path: google.maps.SymbolPath.CIRCLE,
+     fillColor: 'white',
+     fillOpacity: 1,
+     scale: 5,
+     strokeColor: 'black',
+     strokeWeight: 2.5
+    };
+    directionsDisplayStart = new google.maps.DirectionsRenderer({
+      suppressMarkers: true,
+      map: map,
+      preserveViewport: true,
+      polylineOptions: walkingPath
+    });
+    directionsDisplayEnd = new google.maps.DirectionsRenderer({
+      suppressMarkers: true,
+      map: map,
+      preserveViewport: true,
+      polylineOptions: walkingPath
+    });
+    directionsDisplay1 = new google.maps.DirectionsRenderer({
+      suppressMarkers: true,
+      map: map,
+      preserveViewport: true,
+      polylineOptions: busPath
+    });
+    directionsDisplay2 = new google.maps.DirectionsRenderer({
+      suppressMarkers: true,
+      map: map,
+      preserveViewport: true,
+      polylineOptions: busPath
+    });
+    directionsDisplay3 = new google.maps.DirectionsRenderer({
+      suppressMarkers: true,
+      map: map,
+      preserveViewport: true,
+      polylineOptions: busPath
+    });
+    directionsDisplay4 = new google.maps.DirectionsRenderer({
+      suppressMarkers: true,
+      map: map,
+      preserveViewport: true,
+      polylineOptions: busPath
+    });
+    directionsDisplay5 = new google.maps.DirectionsRenderer({
+      suppressMarkers: true,
+      map: map,
+      preserveViewport: true,
+      polylineOptions: busPath
+    });
     infoWindow = new google.maps.InfoWindow;
     
   
     new AutocompleteDirectionsHandler(map);
-    if(startURL.localeCompare(endURL) != 0){
-      //console.log("worked");
-      bikeButton();
-    }
+    
   }
   function AutocompleteDirectionsHandler(map) {
     
@@ -43,7 +116,7 @@ function initMap() {
     this.map = map;
     this.originPlaceId = null;
     this.destinationPlaceId = null;
-    this.travelMode = 'WALKING';
+    this.travelMode = 'TRANSIT';
     this.directionsService = new google.maps.DirectionsService;
     this.directionsRenderer = new google.maps.DirectionsRenderer;
     var geocoder = new google.maps.Geocoder();
@@ -73,7 +146,7 @@ function initMap() {
             if (results[0]) {
               // add a marker to the map on the geolocated point
               geo = results[0];
-              startURL = geo.placeId;
+              
               // compose a string with the address parts
               var address = results[0].address_components[1].long_name+' '+results[0].address_components[0].long_name+', '+results[0].address_components[3].long_name;
 
@@ -269,6 +342,7 @@ function initMap() {
         endLat = place.geometry.location.lat();
         endLng = place.geometry.location.lng();
       }
+      
       me.route();
     });
   };
@@ -278,28 +352,302 @@ function initMap() {
       return;
     }
     var me = this;
-
+    directionsDisplayStart.setMap(null);
+    directionsDisplay1.setMap(null);
+    directionsDisplay2.setMap(null);
+    directionsDisplay3.setMap(null);
+    directionsDisplay4.setMap(null);
+    directionsDisplay5.setMap(null);
+    directionsDisplayEnd.setMap(null);
     
+    
+    function makeMarker( position, icon ) {
+     new google.maps.Marker({
+      position: position,
+      map: me.map,
+      icon: icon,
+     });
+    };
     
     if (this.travelMode == 'TRANSIT'){
-      var url = "https://aggiemapstest.appspot.com/routes/"+startLat+"/"+startLng+"/"+endLat+"/"+endLng+"/weekdays";
-      arr = [];
-      $.ajax({
-        method: "GET",
-        cache: false,
-        url: url,
-        success: function(data) {
-          var path1 = data.path1;
-          var path2 = data.path2;
-          var path3 = data.path3;
-
-          var coords1 = data.coords1;
-          var coords2 = data.coords2;
-          var coords3 = data.coords3;
-          
-          mapit(startLat, startLng, endLat, endLng, coords1, path1);
-        }
+      var route1_waypts = [];
+      var route5_waypts = [];
+      route1_waypts.push({
+        location: {lat:30.617719, lng:-96.343328}
       });
+      route1_waypts.push({
+        location: {lat:30.612131,lng:-96.348074}
+      });
+      route1_waypts.push({
+        location: {lat:30.609877, lng:-96.346867}
+      });
+      route1_waypts.push({
+        location: {lat:30.606778, lng:-96.344749}
+      });
+      route1_waypts.push({
+        location: {lat:30.604763, lng:-96.345291}
+      });
+      route1_waypts.push({
+        location: {lat:30.605534, lng:-96.347500}
+      });
+      route5_waypts.push({
+        location: {lat:30.614096, lng:-96.341778}
+      });
+      route5_waypts.push({
+        location: {lat:30.609960, lng:-96.346758}
+      });
+      route5_waypts.push({
+        location: {lat:30.607105, lng:-96.347930}
+      });
+      
+      var route_num = findBestRoute();
+      startMark1.setMap(null);
+      startMark2.setMap(null);
+      endMark1.setMap(null);
+      endMark2.setMap(null);
+      if(route_num=="1"){
+        directionsDisplayStart.setMap(me.map);
+        directionsDisplay1.setMap(me.map);
+        directionsDisplay2.setMap(me.map);
+        directionsDisplay3.setMap(me.map);
+        directionsDisplay4.setMap(me.map);
+        directionsDisplay5.setMap(me.map);
+        directionsDisplayEnd.setMap(me.map);
+        this.directionsService.route(
+          {
+            origin: {lat:startLat, lng:startLng},
+            destination: route1_waypts[0],
+            travelMode: 'WALKING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplayStart.setDirections(response);
+              startMark1 = new google.maps.Marker({
+                position: response.routes[0].legs[0].start_location,
+                map: me.map,
+                icon: circle,
+              });
+              startMark2 = new google.maps.Marker({
+                position: response.routes[0].legs[0].end_location,
+                map: me.map,
+                icon: 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG',
+              });
+              /*
+              makeMarker(response.routes[0].legs[0].start_location, circle);
+              makeMarker(response.routes[0].legs[0].end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG');
+              */
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+        this.directionsService.route(
+          {
+            origin: route1_waypts[0],
+            destination: route1_waypts[1],
+            travelMode: 'DRIVING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplay1.setDirections(response);
+              
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+        this.directionsService.route(
+          {
+            origin: route1_waypts[1],
+            destination: route1_waypts[2],
+            travelMode: 'DRIVING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplay2.setDirections(response);
+              
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+        this.directionsService.route(
+          {
+            origin: route1_waypts[2],
+            destination: route1_waypts[3],
+            travelMode: 'DRIVING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplay3.setDirections(response);
+              
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+        this.directionsService.route(
+          {
+            origin: route1_waypts[3],
+            destination: route1_waypts[4],
+            travelMode: 'DRIVING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplay4.setDirections(response);
+              
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+        this.directionsService.route(
+          {
+            origin: route1_waypts[4],
+            destination: route1_waypts[5],
+            travelMode: 'DRIVING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplay5.setDirections(response);
+              
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+        this.directionsService.route(
+          {
+            origin: route1_waypts[5],
+            destination: {lat:endLat, lng:endLng},
+            travelMode: 'DRIVING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplayEnd.setDirections(response);
+              endMark1 = new google.maps.Marker({
+                position: response.routes[0].legs[0].end_location,
+                map: me.map,
+                icon: circle,
+              });
+              endMark2 = new google.maps.Marker({
+                position: response.routes[0].legs[0].start_location,
+                map: me.map,
+                icon: 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG',
+              });
+              /*
+              makeMarker(response.routes[0].legs[0].end_location, circle);
+              makeMarker(response.routes[0].legs[0].start_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG');
+              */
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+      }
+      else if(route_num=="5"){
+        directionsDisplayStart.setMap(me.map);
+        directionsDisplay1.setMap(me.map);
+        directionsDisplay2.setMap(me.map);
+        directionsDisplayEnd.setMap(me.map);
+        this.directionsService.route(
+          {
+            origin: {lat:startLat, lng:startLng},
+            destination: route5_waypts[0],
+            travelMode: 'WALKING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplayStart.setDirections(response);
+              startMark1 = new google.maps.Marker({
+                position: response.routes[0].legs[0].start_location,
+                map: me.map,
+                icon: circle,
+              });
+              startMark2 = new google.maps.Marker({
+                position: response.routes[0].legs[0].end_location,
+                map: me.map,
+                icon: 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG',
+              });
+              /*
+              makeMarker(response.routes[0].legs[0].start_location, circle);
+              makeMarker(response.routes[0].legs[0].end_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG');
+              */
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+        this.directionsService.route(
+          {
+            origin: route5_waypts[0],
+            destination: route5_waypts[1],
+            travelMode: 'DRIVING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplay1.setDirections(response);
+              
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+        this.directionsService.route(
+          {
+            origin: route5_waypts[1],
+            destination: route5_waypts[2],
+            travelMode: 'DRIVING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplay2.setDirections(response);
+              
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+        this.directionsService.route(
+          {
+            origin: route5_waypts[2],
+            destination: {lat:endLat, lng:endLng},
+            travelMode: 'WALKING'
+          },
+          function(response, status) {
+            if (status === 'OK') {
+              
+              directionsDisplayEnd.setDirections(response);
+              endMark1 = new google.maps.Marker({
+                position: response.routes[0].legs[0].end_location,
+                map: me.map,
+                icon: circle,
+              });
+              endMark2 = new google.maps.Marker({
+                position: response.routes[0].legs[0].start_location,
+                map: me.map,
+                icon: 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG',
+              });
+              /*
+              makeMarker(response.routes[0].legs[0].end_location, circle);
+              makeMarker(response.routes[0].legs[0].start_location, 'https://raw.githubusercontent.com/danielabreo/aggiemaps/master/data/busicon.PNG');
+              */
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          }
+        );
+      }
     }
     else if (this.travelMode == 'ACCESIBLE'){
       var url = "https://aggiemapstest.appspot.com/routes/"+startLat+"/"+startLng+"/"+endLat+"/"+endLng+"/weekdays";
@@ -766,6 +1114,7 @@ function initMap() {
     }
     var endTimeInSec = sec+ min*60 + hr*3600;
     
+    //console.log(clon);
     
     var totalTime = endTimeInSec-currTimeInSec
     //console.log(endTimeInSec-currTimeInSec);//time required to make trip
@@ -818,11 +1167,11 @@ function initMap() {
       clon.content.getElementById("visualLine").style.top = "47px";
       clon.content.getElementById("visualLine").style.height = "121px";
     }else{
-      clon.content.getElementById("mode").innerHTML = "Bus ##";                                                     //bus number here
+      clon.content.getElementById("mode").innerHTML = "Bus "+ busNumber;                                                     //bus number here
      
       clon.content.getElementById("visualLine").style.borderLeft = "6px solid #003C71";
       clon.content.getElementById("dot").setAttribute('class', 'stop');
-      clon.content.getElementById("dot").innerHTML = "00";                                                         ///enter bus number here
+      clon.content.getElementById("dot").innerHTML = busNumber;                                                         ///enter bus number here
       clon.content.getElementById("visualLine").style.top = "75px";
       clon.content.getElementById("visualLine").style.height = "89px";
     }
@@ -832,7 +1181,57 @@ function initMap() {
     var c = clon.content.cloneNode(true);
     document.getElementById("output").appendChild(c);
   }
-  
+  function findBestRoute(){//5:02pm to test route 1..... 5:05 test route 5
+    var bestRoute = -1;
+    var departAt = document.getElementById("birthdaytime").value
+    if (departAt.length >  0)//we inserted a departtime
+    {
+      var hours = departAt.substring(11,13);
+      var min = departAt.substring(14,16);
+      console.log("birthdaytime " + departAt);
+      console.log("hours " + departAt.substring(11,13));
+      console.log("min " + departAt.substring(14,16));
+      var currTimeInSec = hours *60*60 + min *60;
+      console.log("future departure time:" + currTimeInSec);
+    }
+    else
+    {
+      var today = new Date();
+      var sec = today.getSeconds();
+      var hr = today.getHours();
+      var min = today.getMinutes()%60;
+      var time = hr + ":" + min;
+      var currTimeInSec = min*60 + hr*3600;
+      console.log("time: " + time);
+      console.log("cur departure time:" + currTimeInSec);
+    }
+    var bus1walkTime = 4*60; //sec
+    var bus5walkTime = 2*60; //sec
+    //               3:47,  4:27,  5:07,  5:47,  6:27,  7:07,  7:42
+    let bus1Times = [56820, 59220, 61620, 64020, 66420, 68820, 70920];
+    //               3:52,  4:20,  4:48,  5:16,  5:44,  6:12,  6:40
+    let bus5Times = [57120, 58800, 60480, 62160, 63840, 65520, 67200];
+    
+    var arrivalToBus1 = 9999999;
+    var arrivalToBus5 = 9999999;
+    for (var i = 0; i < bus1Times.length; i++)
+    {
+      if (bus1Times[i]-currTimeInSec-bus1walkTime > 0)
+        arrivalToBus1 = Math.min(arrivalToBus1, bus1Times[i]-currTimeInSec-bus1walkTime);
+    }
+    for (var i = 0; i < bus5Times.length; i++)
+    {
+      if (bus5Times[i]-currTimeInSec+bus5walkTime > 0)
+        arrivalToBus5 = Math.min(arrivalToBus5, bus5Times[i]-currTimeInSec-bus5walkTime);
+    }
+    if (arrivalToBus1 > arrivalToBus5)
+      bestRoute = "5";
+    else
+      bestRoute = "1";
+    console.log("best route number: " + bestRoute);
+    busNumber = bestRoute;
+    return bestRoute;
+  }
   function displayRoutes(routes){
     //console.log("worked");
     var size = 0;
