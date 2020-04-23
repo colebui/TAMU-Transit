@@ -183,8 +183,12 @@ function darkMode(){
     var output = document.getElementById("output");
     var search1 = document.getElementById("search1");
     var search2 = document.getElementById("search2");
+    var tab = document.getElementById("tab");
+    var mode = document.getElementById("mode");
+    var details = document.getElementById("details");
+    var estimate = document.getElementById("estimate");
     var buttons = [b,menuBtn];
-    var divs = [output,destBar,search1,search2];
+    var divs = [output,destBar,search1,search2, tab, mode, details, estimate];
     if(darkModeIO==false){//turning on
         /*
         .style.color = "#d59563";
