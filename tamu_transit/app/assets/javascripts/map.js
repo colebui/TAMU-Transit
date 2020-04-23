@@ -15,7 +15,7 @@ var currMode ='WALKING';
 /*global map*/
 /*global */
 /*global */
-
+var marker_set = false;
 var walkingPath;
 var busPath = {
   strokeColor: '#06427e',
@@ -401,10 +401,12 @@ function initMap() {
       });
       
       var route_num = findBestRoute();
-      startMark1.setMap(null);
-      startMark2.setMap(null);
-      endMark1.setMap(null);
-      endMark2.setMap(null);
+      if(marker_set){
+        startMark1.setMap(null);
+        startMark2.setMap(null);
+        endMark1.setMap(null);
+        endMark2.setMap(null);
+      }
       if(route_num=="1"){
         directionsDisplayStart.setMap(me.map);
         directionsDisplay1.setMap(me.map);
@@ -423,6 +425,7 @@ function initMap() {
             if (status === 'OK') {
               
               directionsDisplayStart.setDirections(response);
+              marker_set = true;
               startMark1 = new google.maps.Marker({
                 position: response.routes[0].legs[0].start_location,
                 map: me.map,
@@ -532,6 +535,7 @@ function initMap() {
             if (status === 'OK') {
               
               directionsDisplayEnd.setDirections(response);
+              marker_set = true;
               endMark1 = new google.maps.Marker({
                 position: response.routes[0].legs[0].end_location,
                 map: me.map,
@@ -567,6 +571,7 @@ function initMap() {
             if (status === 'OK') {
               
               directionsDisplayStart.setDirections(response);
+              marker_set = true;
               startMark1 = new google.maps.Marker({
                 position: response.routes[0].legs[0].start_location,
                 map: me.map,
@@ -628,6 +633,7 @@ function initMap() {
             if (status === 'OK') {
               
               directionsDisplayEnd.setDirections(response);
+              marker_set = true;
               endMark1 = new google.maps.Marker({
                 position: response.routes[0].legs[0].end_location,
                 map: me.map,
