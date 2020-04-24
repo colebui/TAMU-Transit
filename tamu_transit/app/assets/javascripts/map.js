@@ -4,6 +4,9 @@ var endLat;
 var endLng;
 var arr=[];
 var geo;
+var busNumber = "01";
+
+
 
 var route1 = {"coords1":[[30.615178,-96.337378],[30.605585,-96.347413]],"coords2":[[30.613928,-96.339018],[30.614133,-96.343276],[30.605585,-96.347413]],"coords3":[[30.615178,-96.337378],[30.604797,-96.345232]],"coords4":[[30.613928,-96.339018],[30.595977,-96.339922],[30.599502,-96.341795],[30.607069,-96.344685],[30.607005,-96.345],[30.604797,-96.345232]],"path1":["Commons",[1],"Reed Arena - IB"],"path2":["Trigon",[-1],"MSC",[5],"Reed Arena - IB"],"path3":["Commons",[1],"Lot 100G"],"path4":["Trigon",[36],"South East - Park West 2",[-1],"North West - Park West - OB",[8],"Rec Center - IB",[-1],"Rec Center - OB",[1],"Lot 100G"]};
 displayRoutes(route1);
@@ -23,18 +26,19 @@ function initMap() {
     var map = new google.maps.Map(document.getElementById('map'), {
       mapTypeControl: false,
       center: {lat: 30.618811, lng: -96.336424},
-      zoom: 13
+      zoom: 17
     });
     
     infoWindow = new google.maps.InfoWindow;
     
   
     new AutocompleteDirectionsHandler(map);
-    if(startURL.localeCompare(endURL) != 0){
+    //if(startURL.localeCompare(endURL) != 0){
       //console.log("worked");
-      bikeButton();
-    }
+      //bikeButton();
+    //}
   }
+  
   function AutocompleteDirectionsHandler(map) {
     
   
@@ -73,7 +77,7 @@ function initMap() {
             if (results[0]) {
               // add a marker to the map on the geolocated point
               geo = results[0];
-              startURL = geo.placeId;
+              //startURL = geo.placeId;
               // compose a string with the address parts
               var address = results[0].address_components[1].long_name+' '+results[0].address_components[0].long_name+', '+results[0].address_components[3].long_name;
 
@@ -120,7 +124,7 @@ function initMap() {
         document.getElementById("backToTop").style.visibility = "visible";
       }
     });
-  
+    
   }
   
   AutocompleteDirectionsHandler.prototype.setupSwapListener = function(id) {
@@ -269,6 +273,7 @@ function initMap() {
         endLat = place.geometry.location.lat();
         endLng = place.geometry.location.lng();
       }
+      var routeNum = findBestRoute();
       me.route();
     });
   };
@@ -732,17 +737,20 @@ function initMap() {
     panel.innerHTML = "";
     ////console.log(orderedArr);
     
+    
+
+    
+    
     var today = new Date();
-
-    
-    
-
     var sec = today.getSeconds();
     var hr = today.getHours()%12;
     var min = today.getMinutes()%60;
     var time = hr + ":" + min +" PM";
+    console.log("cur time:" + time);
+    
     
     var currTimeInSec = sec+ min*60 + hr*3600;
+
     
     
   
@@ -750,19 +758,18 @@ function initMap() {
     
     for(var i=0;i<orderedArr.length;i++){
       var start = orderedArr[i].start_address.split(" ");
-        
-          var dur = orderedArr[i].duration.text.split(" ");
           
-          //console.log("adding "+ dur[0]);
-          min+=parseInt(dur[0]) 
-          if(min >= 60){
+          if(i!=0){
+            var dur = orderedArr[i-1].duration.text.split(" ");
+            console.log("dur[0]:" + dur[0]);
+            min+=parseInt(dur[0]);
             hr+= Math.floor(min/60);
             min = min%60;
-          
+          console.log("min:" + min);
           
           hr= hr%24;
           time = hr + ":" + min + " PM";
-        
+          console.log("hr:" + hr);
     }
     var endTimeInSec = sec+ min*60 + hr*3600;
     
@@ -809,20 +816,21 @@ function initMap() {
     for(var i =0;i<steps.length;i++){
       clon.content.getElementById("steps").innerHTML+="<div class=\"step\">" + steps[i].instructions+"</div>";
     }
-    
-    if(mode === "WALKING"){
+    console.log("mode: "+mode)
+    if(mode === "WALKING" || mode === "BICYCLING"){
       clon.content.getElementById("mode").innerHTML = "Walk";
       clon.content.getElementById("visualLine").style.borderLeft = "6px dotted #003C71";
       clon.content.getElementById("dot").setAttribute('class', 'dot');
       clon.content.getElementById("dot").innerHTML = "";   
       clon.content.getElementById("visualLine").style.top = "47px";
       clon.content.getElementById("visualLine").style.height = "121px";
-    }else{
-      clon.content.getElementById("mode").innerHTML = "Bus ##";                                                     //bus number here
+    }
+    else{
+      clon.content.getElementById("mode").innerHTML = "Bus "+busNumber;                                                     //bus number here
      
       clon.content.getElementById("visualLine").style.borderLeft = "6px solid #003C71";
       clon.content.getElementById("dot").setAttribute('class', 'stop');
-      clon.content.getElementById("dot").innerHTML = "00";                                                         ///enter bus number here
+      clon.content.getElementById("dot").innerHTML = busNumber;                                                         ///enter bus number here
       clon.content.getElementById("visualLine").style.top = "75px";
       clon.content.getElementById("visualLine").style.height = "89px";
     }
@@ -832,6 +840,58 @@ function initMap() {
     var c = clon.content.cloneNode(true);
     document.getElementById("output").appendChild(c);
   }
+  
+  function findBestRoute(){//5:02pm to test route 1..... 5:05 test route 5
+    var bestRoute = -1;
+    var departAt = document.getElementById("birthdaytime").value
+    if (departAt.length >  0)//we inserted a departtime
+    {
+      var hours = departAt.substring(11,13);
+      var min = departAt.substring(14,16);
+      console.log("birthdaytime " + departAt);
+      console.log("hours " + departAt.substring(11,13));
+      console.log("min " + departAt.substring(14,16));
+      var currTimeInSec = hours *60*60 + min *60;
+      console.log("future departure time:" + currTimeInSec);
+    }
+    else
+    {
+      var today = new Date();
+      var sec = today.getSeconds();
+      var hr = today.getHours();
+      var min = today.getMinutes()%60;
+      var time = hr + ":" + min;
+      var currTimeInSec = min*60 + hr*3600;
+      console.log("time: " + time);
+      console.log("cur departure time:" + currTimeInSec);
+    }
+    var bus1walkTime = 4*60; //sec
+    var bus5walkTime = 2*60; //sec
+    //               3:47,  4:27,  5:07,  5:47,  6:27,  7:07,  7:42
+    let bus1Times = [56820, 59220, 61620, 64020, 66420, 68820, 70920];
+    //               3:52,  4:20,  4:48,  5:16,  5:44,  6:12,  6:40
+    let bus5Times = [57120, 58800, 60480, 62160, 63840, 65520, 67200];
+    
+    var arrivalToBus1 = 9999999;
+    var arrivalToBus5 = 9999999;
+    for (var i = 0; i < bus1Times.length; i++)
+    {
+      if (bus1Times[i]-currTimeInSec-bus1walkTime > 0)
+        arrivalToBus1 = Math.min(arrivalToBus1, bus1Times[i]-currTimeInSec-bus1walkTime);
+    }
+    for (var i = 0; i < bus5Times.length; i++)
+    {
+      if (bus5Times[i]-currTimeInSec+bus5walkTime > 0)
+        arrivalToBus5 = Math.min(arrivalToBus5, bus5Times[i]-currTimeInSec-bus5walkTime);
+    }
+    if (arrivalToBus1 > arrivalToBus5)
+      bestRoute = "5";
+    else
+      bestRoute = "1";
+    console.log("best route number: " + bestRoute);
+    return bestRoute;
+  }
+  
   
   function displayRoutes(routes){
     //console.log("worked");
